@@ -78,15 +78,85 @@ export default function App() {
       <header className="border-b border-[#232C42] bg-[#101828]/95 sticky top-0 z-40 select-none backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
           
-          {/* Brand Logo in precision high-trust wordmark */}
+          {/* Brand Logo in precision high-trust wordmark (Hinged Plate Edition) */}
           <a 
             href="#top" 
             onClick={() => playBloop(600, 0.1)}
-            className="flex items-center gap-2 group select-none"
+            className="flex items-center group select-none cursor-pointer"
           >
-            <span className="font-display font-black text-2xl tracking-wider text-[#E8E4D8] group-hover:text-[#C9A24B] transition-colors uppercase">
-              WEB<span className="text-[#C9A24B]">NAR</span>
-            </span>
+            <div className="flex items-center">
+              {/* Left Plate: WEB */}
+              <motion.div 
+                className="text-[#0E131F] font-display font-black text-xl md:text-2xl px-3.5 py-1 rounded-l border-t border-l border-b border-[#E2E8F0] border-r-0 flex items-center relative shadow-md select-none overflow-hidden"
+                style={{ 
+                  background: 'linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 30%, #94A3B8 70%, #CBD5E1 100%)',
+                  boxShadow: 'inset 1px 1px 0px rgba(255,255,255,0.8), inset -1px -1px 0px rgba(0,0,0,0.1), 0px 4px 6px -1px rgba(0,0,0,0.3)',
+                }}
+                whileHover={{ rotate: -2, originX: 1, originY: 0.5 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 12 }}
+              >
+                {/* Machined Brushed Grain overlay */}
+                <div 
+                  className="absolute inset-0 pointer-events-none opacity-30"
+                  style={{
+                    backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 3px)',
+                  }}
+                />
+                {/* Highlight gleam */}
+                <div 
+                  className="absolute inset-0 pointer-events-none opacity-40 bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-12 animate-pulse"
+                  style={{ animationDuration: '3s' }}
+                />
+                <span className="tracking-wide relative z-10 drop-shadow-[0_1px_0px_rgba(255,255,255,0.8)]">WEB</span>
+                {/* Left side mechanical rivet */}
+                <span className="absolute right-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-gradient-to-b from-[#94A3B8] to-[#475569] border border-[#1E293B] shadow-inner relative z-10">
+                  <span className="absolute inset-0.5 bg-white/40 rounded-full" />
+                </span>
+              </motion.div>
+
+              {/* Central Hinge Bracket */}
+              <div 
+                className="relative w-4 h-7 border-y border-x z-10 flex items-center justify-center -mx-[4px] shadow-lg overflow-hidden"
+                style={{
+                  background: 'linear-gradient(to bottom, #475569 0%, #1E293B 40%, #0F172A 70%, #334155 100%)',
+                  borderColor: '#64748B',
+                }}
+              >
+                {/* Pivot Pin Brass Bolt */}
+                <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-[#F59E0B] to-[#FEF08A] border border-[#0F172A] shadow-inner flex items-center justify-center relative">
+                  <div className="w-1.5 h-[1.5px] bg-[#78350F] rotate-45" />
+                </div>
+              </div>
+
+              {/* Right Plate: NARRR */}
+              <motion.div 
+                className="text-[#3A2502] font-display font-black text-xl md:text-2xl px-3.5 py-1 rounded-r border-t border-r border-b border-[#F5E3B5] border-l-0 flex items-center relative shadow-md select-none overflow-hidden"
+                style={{ 
+                  background: 'linear-gradient(135deg, #FDE047 0%, #EAB308 30%, #CA8A04 70%, #EAB308 100%)',
+                  boxShadow: 'inset 1px 1px 0px rgba(255,255,255,0.7), inset -1px -1px 0px rgba(0,0,0,0.15), 0px 4px 6px -1px rgba(0,0,0,0.3)',
+                }}
+                whileHover={{ rotate: 2, originX: 0, originY: 0.5 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 12 }}
+              >
+                {/* Machined Brushed Grain overlay */}
+                <div 
+                  className="absolute inset-0 pointer-events-none opacity-25"
+                  style={{
+                    backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.18) 2px, rgba(0,0,0,0.18) 3px)',
+                  }}
+                />
+                {/* Highlight gold gleam */}
+                <div 
+                  className="absolute inset-0 pointer-events-none opacity-40 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 animate-pulse"
+                  style={{ animationDuration: '4s' }}
+                />
+                {/* Right side brass rivet */}
+                <span className="absolute left-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-gradient-to-b from-[#FCD34D] to-[#B45309] border border-[#451A03] shadow-inner relative z-10">
+                  <span className="absolute inset-0.5 bg-white/40 rounded-full" />
+                </span>
+                <span className="tracking-wide relative z-10 drop-shadow-[0_1px_0px_rgba(255,255,255,0.6)]">NARRR</span>
+              </motion.div>
+            </div>
           </a>
 
           {/* Nav links / controls */}
