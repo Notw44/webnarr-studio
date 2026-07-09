@@ -181,23 +181,23 @@ export const CLIENT_TESTIMONIALS = [
   {
     name: 'Dave K.',
     trade: 'Dave\'s Sparky Shop',
-    quote: 'WebNar built my site in exactly 5 days. Homeowners kept telling me they chose me because my site looked so premium. The first job paid for the entire build. Radical!',
+    quote: 'WebNar delivered a clean, professional site that loads incredibly fast. Our local customers frequently mention how polished the website layout looks when they contact us. The lead routing goes directly to my cell, ensuring we don\'t miss any incoming inquiries.',
     avatar: '👨‍🔧',
     rating: 5,
     location: 'Burbank'
   },
   {
-    name: 'Big Mike',
-    trade: 'Mike\'s Rooter & Hydro',
-    quote: 'I was sick of paying $300/month for Wix sites that look like standard medical clinics. WebNar made a slime-green page that kids and builders remember. Leads go straight to my phone!',
+    name: 'Michael G.',
+    trade: 'Vernon & Sons Plumbing',
+    quote: 'We were tired of paying high monthly retainer fees to agencies for standard, slow websites. WebNar built a highly modern layout, handled the domain setup seamlessly, and now we receive direct customer inquiries straight to our phone. Highly recommended.',
     avatar: '🧔',
     rating: 5,
-    location: 'Encino'
+    location: 'Pasadena'
   },
   {
     name: 'Sonia R.',
     trade: 'Westside Thermal Pro',
-    quote: 'Our previous agency was charging us $1k a month for absolutely nothing. WebNar gave us our code, built a neat system calculator, and now we rank #1 in Culver City!',
+    quote: 'Working with the team was a straightforward process. They took the time to understand our specialized local service area, integrated an interactive system calculator for customers, and optimized the entire site for mobile. We\'ve seen a steady increase in local organic search traffic.',
     avatar: '👩‍🔧',
     rating: 5,
     location: 'Culver City'

@@ -99,7 +99,7 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
         <div className="absolute bottom-2 right-2 w-1 h-1 bg-[var(--color-gold-90s)]/30 rounded-full" />
 
         {/* Technical Badge Label */}
-        <div className="absolute -top-3 left-6 bg-[#0A0F1E] text-[var(--color-gold-90s)] border border-[var(--color-gold-90s)]/30 px-3 py-0.5 text-[8px] font-mono font-bold tracking-widest uppercase select-none">
+        <div className="absolute -top-3 left-6 bg-[#0A0F1E] text-[var(--color-gold-90s)] border border-[var(--color-gold-90s)]/30 px-3.5 py-1 text-[11px] font-mono font-bold tracking-widest uppercase select-none">
           SYSTEM INTERFACE // TERMINAL.01
         </div>
 
@@ -143,19 +143,19 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  className="absolute inset-0 flex flex-col p-4 crt-glow text-white overflow-hidden"
+                  className="absolute inset-0 flex flex-col p-6 crt-glow text-white overflow-hidden"
                 >
                   {/* Embedded Website Header Mockup */}
-                  <div className="w-full flex items-center justify-between border-b border-[#232C42] pb-2 mb-3">
+                  <div className="w-full flex items-center justify-between border-b border-[#232C42] pb-3 mb-4">
                     <div className="flex items-center gap-1.5">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold-90s)]" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#7A8399]" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#232C42]" />
-                      <span className="text-[9px] font-mono text-steel-gray ml-1 truncate max-w-[120px] md:max-w-[160px]">
+                      <div className="w-2 h-2 rounded-full bg-[var(--color-gold-90s)]" />
+                      <div className="w-2 h-2 rounded-full bg-[#7A8399]" />
+                      <div className="w-2 h-2 rounded-full bg-[#232C42]" />
+                      <span className="text-xs font-mono text-gray-400 ml-1.5 truncate max-w-[120px] md:max-w-[200px]">
                         www.{currentSlide.businessName.toLowerCase().replace(/\s+/g, '')}.com
                       </span>
                     </div>
-                    <div className="bg-[#232C42]/50 border border-[var(--color-gold-90s)]/20 px-2 py-0.5 rounded-none text-[8px] font-mono text-[var(--color-gold-90s)] tracking-wider uppercase">
+                    <div className="bg-[#232C42]/50 border border-[var(--color-gold-90s)]/20 px-2.5 py-1 rounded-none text-[10px] font-mono text-[var(--color-gold-90s)] tracking-wider uppercase">
                       SECURE SOURCE
                     </div>
                   </div>
@@ -164,35 +164,35 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
                       {/* Badge / License */}
-                      <span className="inline-block text-[8px] font-mono tracking-widest text-[var(--color-gold-90s)] mb-1 font-bold uppercase">
+                      <span className="inline-block text-[10px] font-mono tracking-widest text-[var(--color-gold-90s)] mb-2 font-bold uppercase">
                         {currentSlide.tags[0]} | {currentSlide.tags[1]}
                       </span>
                       
                       {/* Business Title */}
-                      <h3 className="font-display text-base font-bold leading-none text-[#E8E4D8] tracking-wide mb-1 uppercase">
+                      <h3 className="font-display text-lg font-bold leading-none text-[#E8E4D8] tracking-wide mb-2 uppercase">
                         {currentSlide.businessName} {currentSlide.accentEmoji}
                       </h3>
                       
                       {/* Slogan */}
-                      <p className="text-[9px] font-mono text-steel-gray uppercase tracking-widest mb-2.5">
+                      <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3">
                         &quot;{currentSlide.slogan}&quot;
                       </p>
 
                       {/* Headline copy */}
-                      <p className="text-xs font-sans leading-relaxed text-[#E8E4D8]/90 max-w-[290px] border-l border-[var(--color-gold-90s)] pl-2.5 mb-3">
+                      <p className="text-sm font-sans leading-relaxed text-[#E8E4D8]/90 max-w-[320px] border-l-2 border-[var(--color-gold-90s)] pl-3 mb-4">
                         {currentSlide.heroHeadline}
                       </p>
                     </div>
 
                     {/* Interactive Highlights Inside Web */}
-                    <div className="space-y-1.5 bg-[#101828]/80 p-2.5 rounded-sm border border-[#232C42] mb-2.5">
-                      <p className="text-[8px] font-mono text-[var(--color-gold-90s)] font-bold uppercase tracking-widest">
+                    <div className="space-y-2 bg-[#101828]/80 p-3.5 rounded-sm border border-[#232C42] mb-3">
+                      <p className="text-[10px] font-mono text-[var(--color-gold-90s)] font-bold uppercase tracking-widest">
                         ★ Live Premium Feature Modules:
                       </p>
-                      <ul className="text-[9px] space-y-1 font-mono text-gray-300">
+                      <ul className="text-xs space-y-1 font-mono text-gray-300">
                         {currentSlide.features.map((feat, idx) => (
-                          <li key={idx} className="flex items-center gap-1.5">
-                            <span className="text-[var(--color-gold-90s)]">✔</span>
+                          <li key={idx} className="flex items-center gap-2">
+                            <span className="text-[var(--color-gold-90s)] font-bold">✔</span>
                             <span className="truncate">{feat}</span>
                           </li>
                         ))}
@@ -200,9 +200,9 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
                     </div>
 
                     {/* Simulated Conversion Button */}
-                    <div className="flex items-center justify-between border-t border-[#232C42] pt-2 text-[9px] font-mono">
-                      <span className="text-steel-gray">STATUS: <span className="text-[var(--color-gold-90s)] animate-pulse">● LIVE</span></span>
-                      <div className="bg-[var(--color-gold-90s)] text-[#0A0D14] font-bold px-3 py-1 text-[8px] tracking-widest uppercase hover:bg-white active:scale-95 transition-all cursor-pointer">
+                    <div className="flex items-center justify-between border-t border-[#232C42] pt-3 text-xs font-mono">
+                      <span className="text-gray-400">STATUS: <span className="text-[var(--color-gold-90s)] animate-pulse">● LIVE</span></span>
+                      <div className="bg-[var(--color-gold-90s)] text-[#0A0D14] font-bold px-4 py-1.5 text-[10px] tracking-widest uppercase hover:bg-white active:scale-95 transition-all cursor-pointer">
                         BOOK JOB ⚡
                       </div>
                     </div>

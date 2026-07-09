@@ -91,50 +91,50 @@ export default function LeadSimulator() {
     <div id="lead-capture-simulator" className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
       
       {/* Left Column: Sleek Precision Console Panel */}
-      <div className="lg:col-span-7 bg-[#101828] text-white border border-[#232C42] rounded-sm p-6 md:p-8 relative overflow-hidden select-none shadow-xl">
+      <div className="lg:col-span-7 bg-[#101828] text-white border border-[#232C42] rounded-md p-6 md:p-8 relative overflow-hidden select-none shadow-xl">
         {/* Subtle grid lines accent */}
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C9A24B]/20 to-transparent" />
         
-        <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#232C42]">
-          <span className="font-mono text-[9px] text-[#C9A24B] font-bold tracking-widest uppercase">
+        <div className="flex items-center justify-between mb-5 pb-4 border-b border-[#232C42]">
+          <span className="font-mono text-xs text-[#C9A24B] font-bold tracking-widest uppercase">
             [ SIMULATOR CONTROLS // DESK_PIPELINE ]
           </span>
-          <div className="bg-[#C9A24B]/10 text-[#C9A24B] text-[8px] font-mono tracking-widest px-2 py-0.5 border border-[#C9A24B]/20 uppercase">
+          <div className="bg-[#C9A24B]/10 text-[#C9A24B] text-[11px] font-mono tracking-widest px-3 py-1 border border-[#C9A24B]/20 uppercase">
             SIMULATOR READY
           </div>
         </div>
 
-        <h3 className="font-display text-sm font-bold text-white tracking-wider mb-2 uppercase">
+        <h3 className="font-display text-base md:text-lg font-bold text-white tracking-wider mb-3 uppercase">
           Test the Speed Pipeline 📟
         </h3>
-        <p className="font-sans text-sm text-steel-gray mb-6 leading-relaxed">
+        <p className="font-sans text-base text-gray-300 mb-8 leading-relaxed">
           See how custom forms forward inquiries to your cell in under 3 seconds! Type your details below or select a preset to begin the forwarding simulator.
         </p>
 
         {/* Quick Presets */}
-        <div className="mb-6">
-          <p className="text-[9px] font-mono font-bold text-steel-gray mb-2.5 uppercase tracking-widest">
+        <div className="mb-8">
+          <p className="text-xs font-mono font-bold text-gray-400 mb-3 uppercase tracking-widest">
             ★ SELECT SIMULATION PRESET:
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             <button
               type="button"
               onClick={() => loadPreset('Maria G.', 'Panel upgrade', 'Van Nuys')}
-              className="text-[10px] font-mono bg-[#161F30] hover:bg-[#C9A24B]/10 border border-[#232C42] hover:border-[#C9A24B] text-gray-300 hover:text-white px-3 py-1.5 transition-all cursor-pointer"
+              className="text-xs font-mono bg-[#161F30] hover:bg-[#C9A24B]/10 border border-[#232C42] hover:border-[#C9A24B] text-gray-300 hover:text-white px-4 py-2 transition-all cursor-pointer rounded-sm"
             >
               Maria G. (Panel Upgrade)
             </button>
             <button
               type="button"
               onClick={() => loadPreset('James T.', 'A/C Blowing Warm', 'Pasadena')}
-              className="text-[10px] font-mono bg-[#161F30] hover:bg-[#C9A24B]/10 border border-[#232C42] hover:border-[#C9A24B] text-gray-300 hover:text-white px-3 py-1.5 transition-all cursor-pointer"
+              className="text-xs font-mono bg-[#161F30] hover:bg-[#C9A24B]/10 border border-[#232C42] hover:border-[#C9A24B] text-gray-300 hover:text-white px-4 py-2 transition-all cursor-pointer rounded-sm"
             >
               James T. (HVAC Fix)
             </button>
             <button
               type="button"
               onClick={() => loadPreset('Sewer Squad', 'Rooter Drain Flush', 'Silverlake')}
-              className="text-[10px] font-mono bg-[#161F30] hover:bg-[#C9A24B]/10 border border-[#232C42] hover:border-[#C9A24B] text-gray-300 hover:text-white px-3 py-1.5 transition-all cursor-pointer"
+              className="text-xs font-mono bg-[#161F30] hover:bg-[#C9A24B]/10 border border-[#232C42] hover:border-[#C9A24B] text-gray-300 hover:text-white px-4 py-2 transition-all cursor-pointer rounded-sm"
             >
               Plumbing Flush
             </button>
@@ -142,9 +142,9 @@ export default function LeadSimulator() {
         </div>
 
         {/* Actual Form */}
-        <form onSubmit={handleSubmit} className="space-y-4 font-mono text-xs">
+        <form onSubmit={handleSubmit} className="space-y-5 font-mono text-sm">
           <div>
-            <label className="block text-[9px] font-bold uppercase text-steel-gray mb-1.5 tracking-widest">
+            <label className="block text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">
               Name of customer:
             </label>
             <input
@@ -152,14 +152,14 @@ export default function LeadSimulator() {
               placeholder="e.g. Maria G."
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-2.5 rounded-none focus:outline-none placeholder:text-gray-600 transition-colors"
+              className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-none focus:outline-none placeholder:text-gray-600 text-sm transition-colors"
               required
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-[9px] font-bold uppercase text-steel-gray mb-1.5 tracking-widest">
+              <label className="block text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">
                 Phone Number:
               </label>
               <input
@@ -167,13 +167,13 @@ export default function LeadSimulator() {
                 placeholder="e.g. (818) 555-0142"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-2.5 rounded-none focus:outline-none placeholder:text-gray-600 transition-colors"
+                className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-none focus:outline-none placeholder:text-gray-600 text-sm transition-colors"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-[9px] font-bold uppercase text-steel-gray mb-1.5 tracking-widest">
+              <label className="block text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">
                 Service Area / Zip:
               </label>
               <input
@@ -181,19 +181,19 @@ export default function LeadSimulator() {
                 placeholder="e.g. Van Nuys"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-2.5 rounded-none focus:outline-none placeholder:text-gray-600 transition-colors"
+                className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-none focus:outline-none placeholder:text-gray-600 text-sm transition-colors"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-[9px] font-bold uppercase text-steel-gray mb-1.5 tracking-widest">
+            <label className="block text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">
               Requested Service:
             </label>
             <select
               value={service}
               onChange={(e) => setService(e.target.value)}
-              className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-2.5 rounded-none focus:outline-none cursor-pointer transition-colors"
+              className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-none focus:outline-none text-sm cursor-pointer transition-colors"
             >
               <option value="Panel upgrade">⚡ Panel Upgrade — Volt Spark</option>
               <option value="EV Charger Install">🔋 EV Charger Station</option>
@@ -207,17 +207,17 @@ export default function LeadSimulator() {
           <button
             type="submit"
             disabled={isSimulating}
-            className={`w-full font-display text-xs font-bold uppercase py-3.5 tracking-widest transition-all ${
+            className={`w-full font-display text-sm font-bold uppercase py-4 tracking-widest transition-all rounded-sm ${
               isSimulating
                 ? 'bg-[#232C42] text-steel-gray cursor-not-allowed border border-transparent'
-                : 'bg-[#C9A24B] hover:bg-white text-[#0A0F1E] font-extrabold border border-[#C9A24B] cursor-pointer active:scale-[0.99]'
+                : 'bg-[#C9A24B] hover:bg-white text-[#0A0F1E] font-extrabold border border-[#C9A24B] cursor-pointer active:scale-[0.99] shadow-lg'
             }`}
           >
             {isSimulating ? '📠 CYBER-TRANSMITTING...' : '⚡ FIRE SIMULATOR DISPATCH!'}
           </button>
         </form>
 
-        <div className="mt-6 flex justify-between items-center text-[9px] text-steel-gray font-mono uppercase tracking-widest">
+        <div className="mt-8 flex justify-between items-center text-xs text-gray-400 font-mono uppercase tracking-widest border-t border-[#232C42] pt-4">
           <span>✎ MODULE // LEAD_FORWARD_SECURE</span>
           <span>★ 100% EXCLUSIVE CODE EXPORT</span>
         </div>
@@ -227,18 +227,18 @@ export default function LeadSimulator() {
       <div className="lg:col-span-5 flex flex-col justify-between font-mono">
         
         {/* Ticket Container */}
-        <div className="bg-[#101828] border border-[#232C42] rounded-sm p-5 md:p-6 text-[#E8E4D8] h-full flex flex-col justify-between relative overflow-hidden shadow-xl">
+        <div className="bg-[#101828] border border-[#232C42] rounded-md p-6 md:p-8 text-[#E8E4D8] h-full flex flex-col justify-between relative overflow-hidden shadow-xl">
           
           <div>
             {/* Lead Header */}
-            <div className="flex items-center justify-between border-b border-[#232C42] pb-3 mb-4">
+            <div className="flex items-center justify-between border-b border-[#232C42] pb-4 mb-5">
               <span className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#C9A24B] animate-pulse" />
-                <span className="text-[10px] font-bold tracking-widest text-[#C9A24B] uppercase">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#C9A24B] animate-pulse" />
+                <span className="text-xs font-bold tracking-widest text-[#C9A24B] uppercase">
                   INCOMING FAX TICKET
                 </span>
               </span>
-              <span className="text-[9px] text-steel-gray font-bold">
+              <span className="text-xs text-gray-400 font-bold">
                 PORT 3000 // SMS_LOG
               </span>
             </div>
@@ -251,24 +251,24 @@ export default function LeadSimulator() {
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -5 }}
-                  className="space-y-4 py-8 text-center text-xs"
+                  className="space-y-5 py-10 text-center text-sm"
                 >
-                  <div className="text-2xl animate-bounce">📠</div>
-                  <p className="text-[#C9A24B] font-bold uppercase tracking-wider animate-pulse">
+                  <div className="text-3xl animate-bounce">📠</div>
+                  <p className="text-[#C9A24B] font-bold uppercase tracking-wider animate-pulse text-sm">
                     {simulationStep === 'dialing' ? 'Dialing WebNar Core Node...' : 'Parsing Customer Request...'}
                   </p>
                   
                   {/* Premium Tech Loading Bar */}
-                  <div className="w-44 h-2 bg-[#0A0D15] border border-[#232C42] rounded-none mx-auto overflow-hidden relative">
+                  <div className="w-56 h-2.5 bg-[#0A0D15] border border-[#232C42] rounded-none mx-auto overflow-hidden relative">
                     <motion.div
                       className="h-full bg-[#C9A24B]"
                       initial={{ width: '0%' }}
                       animate={{ width: '100%' }}
-                      transition={{ duration: 1.8, ease: 'easeInOut' }}
+                      transition={{ duration: 1.2, ease: 'easeInOut' }}
                     />
                   </div>
                   
-                  <div className="text-steel-gray space-y-1 text-[9px] tracking-widest uppercase">
+                  <div className="text-gray-400 space-y-1.5 text-xs tracking-widest uppercase">
                     <p>&gt; CONNECT 14400 // DISPATCH</p>
                     <p>&gt; ENCRYPTING SMS PAYLOAD</p>
                   </div>
@@ -278,53 +278,53 @@ export default function LeadSimulator() {
                   key="ticket-content"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="space-y-3 text-xs"
+                  className="space-y-4 text-sm"
                 >
                   {/* Badge */}
-                  <div className="flex justify-between items-center bg-[#0A0D15] p-2 border border-[#232C42]">
-                    <span className="text-[#C9A24B] font-bold text-[9px] tracking-widest uppercase">★ LEAD INBOX FEED</span>
-                    <span className="text-[9px] text-[#C9A24B] animate-pulse font-bold tracking-widest uppercase">
+                  <div className="flex justify-between items-center bg-[#0A0D15] p-3 border border-[#232C42]">
+                    <span className="text-[#C9A24B] font-bold text-xs tracking-widest uppercase">★ LEAD INBOX FEED</span>
+                    <span className="text-xs text-[#C9A24B] animate-pulse font-bold tracking-widest uppercase">
                       ● READY
                     </span>
                   </div>
 
                   {/* Fields Grid */}
-                  <div className="space-y-2.5 bg-[#0A0D15]/60 p-4 border border-[#232C42] relative">
+                  <div className="space-y-3.5 bg-[#0A0D15]/60 p-5 border border-[#232C42] relative">
                     
                     {/* Laser stamp */}
-                    <div className="absolute top-2 right-2 border border-[#C9A24B] text-[#C9A24B] text-[8px] font-bold px-2 py-0.5 rounded-none rotate-6 uppercase select-none">
+                    <div className="absolute top-3 right-3 border border-[#C9A24B] text-[#C9A24B] text-xs font-bold px-2.5 py-1 rounded-none rotate-6 uppercase select-none">
                       {tickerLead.status === 'delivered' ? 'DELIVERED ✔' : 'PENDING'}
                     </div>
 
-                    <div className="grid grid-cols-4 border-b border-[#232C42]/60 pb-1.5">
-                      <span className="text-steel-gray font-bold uppercase text-[9px] tracking-wider">CLIENT</span>
-                      <span className="col-span-3 text-[#E8E4D8] font-bold text-[10px]">{tickerLead.name}</span>
+                    <div className="grid grid-cols-4 border-b border-[#232C42]/60 pb-2">
+                      <span className="text-gray-400 font-bold uppercase text-xs tracking-wider">CLIENT</span>
+                      <span className="col-span-3 text-[#E8E4D8] font-bold text-sm">{tickerLead.name}</span>
                     </div>
 
-                    <div className="grid grid-cols-4 border-b border-[#232C42]/60 pb-1.5">
-                      <span className="text-steel-gray font-bold uppercase text-[9px] tracking-wider">PHONE</span>
-                      <span className="col-span-3 text-[#C9A24B] font-bold text-[10px]">{tickerLead.phone}</span>
+                    <div className="grid grid-cols-4 border-b border-[#232C42]/60 pb-2">
+                      <span className="text-gray-400 font-bold uppercase text-xs tracking-wider">PHONE</span>
+                      <span className="col-span-3 text-[#C9A24B] font-bold text-sm">{tickerLead.phone}</span>
                     </div>
 
-                    <div className="grid grid-cols-4 border-b border-[#232C42]/60 pb-1.5">
-                      <span className="text-steel-gray font-bold uppercase text-[9px] tracking-wider">SERVICE</span>
-                      <span className="col-span-3 text-[#E8E4D8] font-bold text-[10px]">{tickerLead.service}</span>
+                    <div className="grid grid-cols-4 border-b border-[#232C42]/60 pb-2">
+                      <span className="text-gray-400 font-bold uppercase text-xs tracking-wider">SERVICE</span>
+                      <span className="col-span-3 text-[#E8E4D8] font-bold text-sm">{tickerLead.service}</span>
                     </div>
 
-                    <div className="grid grid-cols-4 border-b border-[#232C42]/60 pb-1.5">
-                      <span className="text-steel-gray font-bold uppercase text-[9px] tracking-wider">AREA</span>
-                      <span className="col-span-3 text-[#C9A24B] font-bold text-[10px]">{tickerLead.location}</span>
+                    <div className="grid grid-cols-4 border-b border-[#232C42]/60 pb-2">
+                      <span className="text-gray-400 font-bold uppercase text-xs tracking-wider">AREA</span>
+                      <span className="col-span-3 text-[#C9A24B] font-bold text-sm">{tickerLead.location}</span>
                     </div>
 
                     <div className="grid grid-cols-4">
-                      <span className="text-steel-gray font-bold uppercase text-[9px] tracking-wider">ROUTING</span>
-                      <span className="col-span-3 text-[#C9A24B] font-bold text-[9px] uppercase tracking-wider">
+                      <span className="text-gray-400 font-bold uppercase text-xs tracking-wider">ROUTING</span>
+                      <span className="col-span-3 text-[#C9A24B] font-bold text-xs uppercase tracking-wider">
                         DISPATCH_SMS_OK (2.4s)
                       </span>
                     </div>
                   </div>
 
-                  <p className="text-[9px] text-center text-steel-gray uppercase tracking-widest">
+                  <p className="text-[10px] text-center text-gray-400 uppercase tracking-widest">
                     BAKED DIRECTLY INTO CORE DESIGN FRAMEWORK.
                   </p>
                 </motion.div>
@@ -333,19 +333,19 @@ export default function LeadSimulator() {
           </div>
 
           {/* Lead History Ticker */}
-          <div className="mt-4 border-t border-[#232C42] pt-4">
-            <span className="text-[9px] text-steel-gray font-bold uppercase block mb-2 tracking-widest">
+          <div className="mt-5 border-t border-[#232C42] pt-5">
+            <span className="text-xs text-gray-400 font-bold uppercase block mb-3 tracking-widest">
               📋 LIVE SIMULATION RECIPIENTS:
             </span>
-            <div className="space-y-1.5 max-h-24 overflow-y-auto pr-1">
+            <div className="space-y-2 max-h-32 overflow-y-auto pr-1">
               {leadHistory.map((lead) => (
-                <div key={lead.id} className="bg-[#0A0D15] p-2 flex items-center justify-between text-[9px] border border-[#232C42]/40">
-                  <div className="truncate pr-2 uppercase tracking-wider text-[8px]">
+                <div key={lead.id} className="bg-[#0A0D15] p-2.5 flex items-center justify-between text-xs border border-[#232C42]/40">
+                  <div className="truncate pr-2 uppercase tracking-wider text-[11px]">
                     <span className="text-[#C9A24B]">✔</span>{' '}
                     <span className="text-white font-bold">{lead.name}</span>{' '}
-                    <span className="text-steel-gray">({lead.service})</span>
+                    <span className="text-gray-400">({lead.service})</span>
                   </div>
-                  <span className="text-steel-gray text-[8px]">{lead.timestamp}</span>
+                  <span className="text-gray-400 text-[10px]">{lead.timestamp}</span>
                 </div>
               ))}
             </div>

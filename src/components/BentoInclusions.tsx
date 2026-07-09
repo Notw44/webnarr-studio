@@ -1,52 +1,62 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { BENTO_FEATURES } from '../data';
-import { playBloop } from '../utils/audio';
 
 export default function BentoInclusions() {
   return (
     <div id="what-is-included" className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {BENTO_FEATURES.map((feature, idx) => {
           return (
             <motion.div
               key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ 
-                y: -4,
-                transition: { duration: 0.2, ease: 'easeOut' }
+                y: -8,
+                scale: 1.015,
+                borderColor: '#C9A24B',
+                boxShadow: '0 25px 50px -12px rgba(201, 162, 75, 0.15)'
               }}
-              onHoverStart={() => playBloop(320 + idx * 40, 0.05)}
-              className="bg-[#101828] text-white border border-[#232C42] hover:border-[#C9A24B]/50 rounded-sm p-6 relative overflow-hidden flex flex-col justify-between transition-all duration-300 shadow-lg"
+              className="bg-gradient-to-b from-[#131A2D] to-[#0D1220] text-white border border-[#232C42] rounded-md p-8 relative overflow-hidden flex flex-col justify-between transition-all duration-300 shadow-xl group cursor-pointer"
             >
-              {/* Blueprint subtle line accent */}
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C9A24B]/20 to-transparent" />
+              {/* Premium golden radial background accent that lights up on hover */}
+              <div className="absolute -inset-px bg-radial from-[#C9A24B]/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-              <div>
+              {/* Shimmer light sweep beam */}
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_ease-in-out] pointer-events-none" />
+
+              <div className="relative z-10">
                 {/* Header Badge Row */}
-                <div className="flex items-center justify-between mb-4 z-10 relative">
-                  <span className="text-[#C9A24B] font-mono text-[9px] uppercase px-2.5 py-0.5 border border-[#C9A24B]/30 tracking-widest font-bold bg-[#C9A24B]/5">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="text-[#C9A24B] font-mono text-xs uppercase px-3 py-1 border border-[#C9A24B]/30 tracking-widest font-bold bg-[#C9A24B]/10 rounded-sm">
                     {feature.badge}
                   </span>
-                  <span className="text-lg opacity-70">
+                  <span className="text-2xl opacity-90 scale-100 group-hover:scale-110 transition-transform duration-300">
                     {feature.accentEmoji}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-3 select-none">
+                <h3 className="font-display text-base md:text-lg font-bold text-white uppercase tracking-wider mb-4 select-none group-hover:text-[#C9A24B] transition-colors duration-300">
                   {feature.title}
                 </h3>
 
                 {/* Description */}
-                <p className="font-sans text-sm text-steel-gray leading-relaxed mb-4">
+                <p className="font-sans text-base text-gray-300 leading-relaxed mb-6">
                   {feature.desc}
                 </p>
               </div>
 
               {/* Status Code Accent */}
-              <div className="flex items-center justify-between border-t border-[#232C42] pt-3 text-[9px] font-mono text-steel-gray uppercase tracking-widest">
+              <div className="relative z-10 flex items-center justify-between border-t border-[#232C42] pt-4 mt-2 text-xs font-mono text-gray-400 uppercase tracking-widest">
                 <span>MODULE // SYSTEM_0{idx + 1}</span>
-                <span className="text-[#C9A24B] font-bold">SECURED ✔</span>
+                <span className="text-[#C9A24B] font-bold flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C9A24B] animate-ping" />
+                  SECURED ✔
+                </span>
               </div>
             </motion.div>
           );

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { TRADE_THEMES, CLIENT_TESTIMONIALS } from './data';
+import { TRADE_THEMES } from './data';
 import { TradeType } from './types';
 import CrtCarousel from './components/CrtCarousel';
 import LeadSimulator from './components/LeadSimulator';
 import BentoInclusions from './components/BentoInclusions';
+import ReviewConsole from './components/ReviewConsole';
 import SoundToggle from './components/SoundToggle';
 import MetallicBackground from './components/MetallicBackground';
 import { playBloop, playSuccess, playWobble } from './utils/audio';
@@ -14,17 +15,24 @@ export default function App() {
   const currentTheme = TRADE_THEMES[activeTrade];
 
   // Pricing calculator state
+  const [selectedPackage, setSelectedPackage] = useState<'essential' | 'professional' | 'signature'>('professional');
   const [hasBranding, setHasBranding] = useState(true);
   const [hasLeadCapture, setHasLeadCapture] = useState(true);
   const [hasSeo, setHasSeo] = useState(false);
   const [hasWidget, setHasWidget] = useState(false);
   const [speedTier, setSpeedTier] = useState<'standard' | 'turbo'>('standard');
 
-  const basePrice = 1200;
-  const brandingPrice = hasBranding ? 400 : 0;
-  const leadPrice = hasLeadCapture ? 300 : 0;
-  const seoPrice = hasSeo ? 500 : 0;
-  const widgetPrice = hasWidget ? 350 : 0;
+  const basePrice = selectedPackage === 'essential' ? 1500 : selectedPackage === 'professional' ? 3500 : 6000;
+
+  const isBrandingIncluded = selectedPackage === 'professional' || selectedPackage === 'signature';
+  const isLeadIncluded = selectedPackage === 'professional' || selectedPackage === 'signature';
+  const isSeoIncluded = selectedPackage === 'signature';
+  const isWidgetIncluded = selectedPackage === 'signature';
+
+  const brandingPrice = (!isBrandingIncluded && hasBranding) ? 400 : 0;
+  const leadPrice = (!isLeadIncluded && hasLeadCapture) ? 300 : 0;
+  const seoPrice = (!isSeoIncluded && hasSeo) ? 500 : 0;
+  const widgetPrice = (!isWidgetIncluded && hasWidget) ? 350 : 0;
   const speedMarkup = speedTier === 'turbo' ? 450 : 0;
   
   const totalPrice = basePrice + brandingPrice + leadPrice + seoPrice + widgetPrice + speedMarkup;
@@ -36,10 +44,22 @@ export default function App() {
 
   const toggleCalculatorOption = (option: string) => {
     playBloop(340, 0.05);
-    if (option === 'branding') setHasBranding(!hasBranding);
-    if (option === 'lead') setHasLeadCapture(!hasLeadCapture);
-    if (option === 'seo') setHasSeo(!hasSeo);
-    if (option === 'widget') setHasWidget(!hasWidget);
+    if (option === 'branding') {
+      if (isBrandingIncluded) return; // Forced included
+      setHasBranding(!hasBranding);
+    }
+    if (option === 'lead') {
+      if (isLeadIncluded) return; // Forced included
+      setHasLeadCapture(!hasLeadCapture);
+    }
+    if (option === 'seo') {
+      if (isSeoIncluded) return; // Forced included
+      setHasSeo(!hasSeo);
+    }
+    if (option === 'widget') {
+      if (isWidgetIncluded) return; // Forced included
+      setHasWidget(!hasWidget);
+    }
   };
 
   const handleSpeedTier = (tier: 'standard' | 'turbo') => {
@@ -317,44 +337,55 @@ export default function App() {
           </div>
 
           {/* Part 1 — three build package cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {/* Essential Card */}
             <motion.div
-              whileHover={{ y: -4 }}
-              onHoverStart={() => playBloop(320, 0.05)}
-              className="bg-[#101828] text-white border border-[#232C42] hover:border-[#C9A24B]/40 rounded-none p-6 md:p-8 relative overflow-hidden flex flex-col justify-between shadow-lg transition-colors duration-300"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ 
+                y: -10, 
+                scale: 1.02, 
+                borderColor: '#C9A24B',
+                boxShadow: "0 30px 60px -15px rgba(201, 162, 75, 0.15)"
+              }}
+              className="bg-[#101828] text-white border border-[#232C42] rounded-md p-8 relative overflow-hidden flex flex-col justify-between shadow-xl transition-all duration-300 group cursor-pointer"
             >
-              <div className="absolute top-0 right-6 bg-[#232C42]/60 border-x border-b border-[#232C42] text-[8px] font-mono font-bold text-steel-gray px-3 py-1 select-none uppercase tracking-widest">
+              {/* Shimmer metallic light beam */}
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_ease-in-out] pointer-events-none" />
+
+              <div className="absolute top-0 right-6 bg-[#232C42]/60 border-x border-b border-[#232C42] text-[10px] font-mono font-bold text-gray-400 px-4 py-1.5 select-none uppercase tracking-widest">
                 SYS_PKG_01
               </div>
 
-              <div className="flex-1 flex flex-col">
-                <span className="font-mono text-[9px] text-[#C9A24B] font-bold tracking-widest uppercase block mb-1">
+              <div className="flex-1 flex flex-col relative z-10">
+                <span className="font-mono text-xs text-[#C9A24B] font-bold tracking-widest uppercase block mb-2">
                   BASE SPRINT
                 </span>
-                <h3 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-2">
+                <h3 className="font-display text-base md:text-lg font-bold text-white uppercase tracking-wider mb-3">
                   Essential
                 </h3>
-                <div className="flex items-baseline gap-1.5 mb-6 border-b border-[#232C42] pb-4">
-                  <span className="font-mono text-[9px] text-steel-gray uppercase tracking-widest">from</span>
-                  <span className="font-display text-2xl font-black text-white">$1,500</span>
-                  <span className="font-mono text-[9px] text-steel-gray uppercase tracking-widest ml-auto">One-time</span>
+                <div className="flex items-baseline gap-2 mb-6 border-b border-[#232C42] pb-5">
+                  <span className="font-mono text-xs text-gray-400 uppercase tracking-widest">from</span>
+                  <span className="font-display text-3xl font-black text-white">$1,500</span>
+                  <span className="font-mono text-xs text-gray-400 uppercase tracking-widest ml-auto">One-time</span>
                 </div>
                 
-                <ul className="space-y-3.5 mb-8 flex-1">
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                <ul className="space-y-4 mb-8 flex-1">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0 font-bold">✔</span>
                     <span>Single-page custom website</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0 font-bold">✔</span>
                     <span>Mobile responsive</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0 font-bold">✔</span>
                     <span>Contact form with instant lead alerts</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0 font-bold">✔</span>
                     <span>Deployed with domain setup</span>
                   </li>
@@ -362,9 +393,12 @@ export default function App() {
               </div>
 
               <a
-                href="#lead-capture-simulator"
-                onClick={() => playSuccess()}
-                className="block w-full text-center bg-[#161F30] hover:bg-[#C9A24B] border border-[#232C42] hover:border-[#C9A24B] text-[#E8E4D8] hover:text-[#0A0F1E] font-display text-[9px] font-bold tracking-widest uppercase py-3 transition-all duration-300 cursor-pointer"
+                href="#project-estimator"
+                onClick={() => {
+                  setSelectedPackage('essential');
+                  playSuccess();
+                }}
+                className="relative z-10 block w-full text-center bg-[#161F30] hover:bg-[#C9A24B] border border-[#232C42] hover:border-[#C9A24B] text-[#E8E4D8] hover:text-[#0A0F1E] font-display text-xs font-bold tracking-widest uppercase py-4 transition-all duration-300 cursor-pointer rounded-sm"
               >
                 SELECT ESSENTIAL ⚡
               </a>
@@ -372,45 +406,56 @@ export default function App() {
 
             {/* Professional Card (Featured / Most popular) */}
             <motion.div
-              whileHover={{ y: -4 }}
-              onHoverStart={() => playBloop(360, 0.05)}
-              className="bg-[#101828] text-white border-2 border-[#C9A24B] rounded-none p-6 md:p-8 relative overflow-hidden flex flex-col justify-between shadow-2xl transition-all duration-300"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ 
+                y: -10, 
+                scale: 1.025, 
+                borderColor: '#C9A24B',
+                boxShadow: "0 30px 60px -15px rgba(201, 162, 75, 0.25)"
+              }}
+              className="bg-gradient-to-b from-[#101828] to-[#121B2D] text-white border-2 border-[#C9A24B] rounded-md p-8 relative overflow-hidden flex flex-col justify-between shadow-2xl transition-all duration-300 group cursor-pointer"
             >
-              <div className="absolute top-0 right-6 bg-[#C9A24B] text-[#0A0F1E] text-[8px] font-mono font-bold px-3.5 py-1 select-none uppercase tracking-widest">
+              {/* Shimmer metallic light beam */}
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_ease-in-out] pointer-events-none" />
+
+              <div className="absolute top-0 right-6 bg-[#C9A24B] text-[#0A0F1E] text-[10px] font-mono font-bold px-4 py-1.5 select-none uppercase tracking-widest">
                 ★ MOST POPULAR
               </div>
 
-              <div className="flex-1 flex flex-col">
-                <span className="font-mono text-[9px] text-[#C9A24B] font-bold tracking-widest uppercase block mb-1">
+              <div className="flex-1 flex flex-col relative z-10">
+                <span className="font-mono text-xs text-[#C9A24B] font-bold tracking-widest uppercase block mb-2">
                   RECOMMENDED
                 </span>
-                <h3 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-2">
+                <h3 className="font-display text-base md:text-lg font-bold text-white uppercase tracking-wider mb-3">
                   Professional
                 </h3>
-                <div className="flex items-baseline gap-1.5 mb-6 border-b border-[#232C42] pb-4">
-                  <span className="font-mono text-[9px] text-steel-gray uppercase tracking-widest">from</span>
-                  <span className="font-display text-2xl font-black text-white">$3,500</span>
-                  <span className="font-mono text-[9px] text-steel-gray uppercase tracking-widest ml-auto">One-time</span>
+                <div className="flex items-baseline gap-2 mb-6 border-b border-[#232C42] pb-5">
+                  <span className="font-mono text-xs text-gray-400 uppercase tracking-widest">from</span>
+                  <span className="font-display text-3xl font-black text-white">$3,500</span>
+                  <span className="font-mono text-xs text-gray-400 uppercase tracking-widest ml-auto">One-time</span>
                 </div>
                 
-                <ul className="space-y-3.5 mb-8 flex-1">
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                <ul className="space-y-4 mb-8 flex-1">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0 font-bold">✔</span>
                     <span>5–7 page custom website</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0 font-bold">✔</span>
                     <span>Animations &amp; custom graphics</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0 font-bold">✔</span>
                     <span>Instant lead capture to your inbox</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0 font-bold">✔</span>
                     <span>Local SEO fundamentals</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0 font-bold">✔</span>
                     <span>Google Business Profile linkup</span>
                   </li>
@@ -418,9 +463,12 @@ export default function App() {
               </div>
 
               <a
-                href="#lead-capture-simulator"
-                onClick={() => playSuccess()}
-                className="block w-full text-center bg-[#C9A24B] hover:bg-white text-[#0A0F1E] font-display text-[9px] font-bold tracking-widest uppercase py-3 transition-all duration-300 cursor-pointer"
+                href="#project-estimator"
+                onClick={() => {
+                  setSelectedPackage('professional');
+                  playSuccess();
+                }}
+                className="relative z-10 block w-full text-center bg-[#C9A24B] hover:bg-white text-[#0A0F1E] font-display text-xs font-bold tracking-widest uppercase py-4 transition-all duration-300 cursor-pointer rounded-sm shadow-md"
               >
                 SELECT PROFESSIONAL ⚡
               </a>
@@ -428,45 +476,56 @@ export default function App() {
 
             {/* Signature Card */}
             <motion.div
-              whileHover={{ y: -4 }}
-              onHoverStart={() => playBloop(400, 0.05)}
-              className="bg-[#101828] text-white border border-[#232C42] hover:border-[#C9A24B]/40 rounded-none p-6 md:p-8 relative overflow-hidden flex flex-col justify-between shadow-lg transition-colors duration-300"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ 
+                y: -10, 
+                scale: 1.02, 
+                borderColor: '#C9A24B',
+                boxShadow: "0 30px 60px -15px rgba(201, 162, 75, 0.15)"
+              }}
+              className="bg-[#101828] text-white border border-[#232C42] hover:border-[#C9A24B]/40 rounded-md p-8 relative overflow-hidden flex flex-col justify-between shadow-xl transition-all duration-300 group cursor-pointer"
             >
-              <div className="absolute top-0 right-6 bg-[#232C42]/60 border-x border-b border-[#232C42] text-[8px] font-mono font-bold text-steel-gray px-3 py-1 select-none uppercase tracking-widest">
+              {/* Shimmer metallic light beam */}
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_ease-in-out] pointer-events-none" />
+
+              <div className="absolute top-0 right-6 bg-[#232C42]/60 border-x border-b border-[#232C42] text-[10px] font-mono font-bold text-gray-400 px-4 py-1.5 select-none uppercase tracking-widest">
                 SYS_PKG_03
               </div>
 
-              <div className="flex-1 flex flex-col">
-                <span className="font-mono text-[9px] text-[#C9A24B] font-bold tracking-widest uppercase block mb-1">
+              <div className="flex-1 flex flex-col relative z-10">
+                <span className="font-mono text-xs text-[#C9A24B] font-bold tracking-widest uppercase block mb-2">
                   BESPOKE tier
                 </span>
-                <h3 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-2">
+                <h3 className="font-display text-base md:text-lg font-bold text-white uppercase tracking-wider mb-3">
                   Signature
                 </h3>
-                <div className="flex items-baseline gap-1.5 mb-6 border-b border-[#232C42] pb-4">
-                  <span className="font-mono text-[9px] text-steel-gray uppercase tracking-widest">from</span>
-                  <span className="font-display text-2xl font-black text-white">$6,000</span>
-                  <span className="font-mono text-[9px] text-steel-gray uppercase tracking-widest ml-auto">One-time</span>
+                <div className="flex items-baseline gap-2 mb-6 border-b border-[#232C42] pb-5">
+                  <span className="font-mono text-xs text-gray-400 uppercase tracking-widest">from</span>
+                  <span className="font-display text-3xl font-black text-white">$6,000</span>
+                  <span className="font-mono text-xs text-gray-400 uppercase tracking-widest ml-auto">One-time</span>
                 </div>
                 
-                <ul className="space-y-3.5 mb-8 flex-1">
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans font-bold">
+                <ul className="space-y-4 mb-8 flex-1">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans font-bold">
                     <span className="text-[#C9A24B] shrink-0">★</span>
                     <span>Everything in Professional</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0">✔</span>
                     <span>Advanced visual effects</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0">✔</span>
                     <span>Custom illustration set</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0">✔</span>
                     <span>Full brand direction</span>
                   </li>
-                  <li className="flex items-start gap-2.5 text-xs text-[#E8E4D8]/80 font-sans">
+                  <li className="flex items-start gap-3 text-sm text-[#E8E4D8]/90 font-sans">
                     <span className="text-[#C9A24B] shrink-0">✔</span>
                     <span>Lead dashboard</span>
                   </li>
@@ -474,9 +533,12 @@ export default function App() {
               </div>
 
               <a
-                href="#lead-capture-simulator"
-                onClick={() => playSuccess()}
-                className="block w-full text-center bg-[#161F30] hover:bg-[#C9A24B] border border-[#232C42] hover:border-[#C9A24B] text-[#E8E4D8] hover:text-[#0A0F1E] font-display text-[9px] font-bold tracking-widest uppercase py-3 transition-all duration-300 cursor-pointer"
+                href="#project-estimator"
+                onClick={() => {
+                  setSelectedPackage('signature');
+                  playSuccess();
+                }}
+                className="relative z-10 block w-full text-center bg-[#161F30] hover:bg-[#C9A24B] border border-[#232C42] hover:border-[#C9A24B] text-[#E8E4D8] hover:text-[#0A0F1E] font-display text-xs font-bold tracking-widest uppercase py-4 transition-all duration-300 cursor-pointer rounded-sm"
               >
                 SELECT SIGNATURE ⚡
               </a>
@@ -577,148 +639,229 @@ export default function App() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             
             {/* Left Column: Interactive Checkbox List */}
-            <div className="lg:col-span-7 bg-[#101828] border border-[#232C42] rounded-sm p-6 md:p-8 shadow-xl">
-              <h3 className="font-display text-xs md:text-sm font-bold text-white mb-2 uppercase tracking-wider">
-                Customize your web payload
-              </h3>
-              <p className="text-xs font-sans text-steel-gray mb-6 leading-relaxed">
-                Pick your upgrades. Our standard deployment includes fully custom layouts, mobile layout optimization, fast hosting setups, and basic support.
-              </p>
+            <div className="lg:col-span-7 bg-[#101828] border border-[#232C42] rounded-sm p-6 md:p-8 shadow-xl flex flex-col justify-between">
+              <div>
+                <h3 className="font-display text-xs md:text-sm font-bold text-white mb-2 uppercase tracking-wider">
+                  Customize your web payload
+                </h3>
+                <p className="text-xs font-sans text-steel-gray mb-6 leading-relaxed">
+                  Select your base package and configure active upgrades. Our estimator dynamically flags modules that are already included for free in your chosen tier.
+                </p>
 
-              {/* Checklist items */}
-              <div className="space-y-4">
-                
-                {/* Standard Base Inclusion - non-clickable */}
-                <div className="flex items-start gap-4 bg-[#0A0D15] p-4 border border-[#232C42]">
-                  <div className="w-5 h-5 bg-[#C9A24B]/10 border border-[#C9A24B]/40 flex items-center justify-center text-[#C9A24B] font-bold text-xs shrink-0">
-                    ✔
+                {/* Segmented Base Package Selector */}
+                <div className="mb-6 bg-[#0A0D15] p-3.5 border border-[#232C42]">
+                  <label className="block text-[10px] font-mono font-bold uppercase text-gray-400 mb-2.5 tracking-widest">
+                    [ 1 ] Choose starting sprint tier:
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedPackage('essential'); playBloop(380, 0.08); }}
+                      className={`py-3 px-2 text-center font-mono text-[10px] md:text-xs uppercase font-bold border transition-all cursor-pointer ${
+                        selectedPackage === 'essential'
+                          ? 'bg-[#C9A24B]/15 border-[#C9A24B] text-[#C9A24B] shadow-inner'
+                          : 'bg-[#101828]/60 text-gray-400 border-[#232C42] hover:border-gray-600'
+                      }`}
+                    >
+                      Essential
+                      <span className="block text-[9px] font-normal text-gray-400 mt-1">$1,500</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedPackage('professional'); playBloop(420, 0.08); }}
+                      className={`py-3 px-2 text-center font-mono text-[10px] md:text-xs uppercase font-bold border transition-all cursor-pointer ${
+                        selectedPackage === 'professional'
+                          ? 'bg-[#C9A24B]/15 border-[#C9A24B] text-[#C9A24B] shadow-inner'
+                          : 'bg-[#101828]/60 text-gray-400 border-[#232C42] hover:border-gray-600'
+                      }`}
+                    >
+                      Professional
+                      <span className="block text-[9px] font-normal text-[#C9A24B] mt-1 font-bold">$3,500</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedPackage('signature'); playBloop(480, 0.08); }}
+                      className={`py-3 px-2 text-center font-mono text-[10px] md:text-xs uppercase font-bold border transition-all cursor-pointer ${
+                        selectedPackage === 'signature'
+                          ? 'bg-[#C9A24B]/15 border-[#C9A24B] text-[#C9A24B] shadow-inner'
+                          : 'bg-[#101828]/60 text-gray-400 border-[#232C42] hover:border-gray-600'
+                      }`}
+                    >
+                      Signature
+                      <span className="block text-[9px] font-normal text-gray-400 mt-1">$6,000</span>
+                    </button>
                   </div>
-                  <div>
-                    <h4 className="font-mono text-xs text-white uppercase tracking-wider font-bold">
-                      Standard Custom Design Core (Included)
-                    </h4>
-                    <p className="text-[11px] text-steel-gray mt-1 leading-relaxed">
-                      No templates. Built with clean, custom grid layouts matched to your neighborhood.
-                    </p>
-                  </div>
-                  <span className="ml-auto font-mono text-xs text-[#C9A24B] font-bold">
-                    $1,200
-                  </span>
                 </div>
 
-                {/* Option 1 */}
-                <div 
-                  onClick={() => toggleCalculatorOption('branding')}
-                  className="flex items-start gap-4 bg-[#0A0D15]/40 hover:bg-[#0A0D15]/80 p-4 border border-[#232C42] hover:border-[#C9A24B]/40 cursor-pointer select-none transition-all"
-                >
-                  <input 
-                    type="checkbox" 
-                    checked={hasBranding}
-                    onChange={() => {}}
-                    className="w-4 h-4 border border-[#232C42] accent-[#C9A24B] mt-0.5 cursor-pointer shrink-0"
-                  />
-                  <div>
-                    <h4 className="font-mono text-xs text-[#E8E4D8] uppercase tracking-wider font-bold">
-                      Custom Trade Logos &amp; Vector Badges
-                    </h4>
-                    <p className="text-[11px] text-steel-gray mt-1 leading-relaxed">
-                      Unique vector badges, mascot stickers, and customized trademark-looking stamps for your license numbers.
-                    </p>
-                  </div>
-                  <span className="ml-auto font-mono text-xs text-[#C9A24B] font-bold">
-                    +$400
-                  </span>
-                </div>
+                <label className="block text-[10px] font-mono font-bold uppercase text-gray-400 mb-3 tracking-widest">
+                  [ 2 ] Configure optional upgrades &amp; custom modules:
+                </label>
 
-                {/* Option 2 */}
-                <div 
-                  onClick={() => toggleCalculatorOption('lead')}
-                  className="flex items-start gap-4 bg-[#0A0D15]/40 hover:bg-[#0A0D15]/80 p-4 border border-[#232C42] hover:border-[#C9A24B]/40 cursor-pointer select-none transition-all"
-                >
-                  <input 
-                    type="checkbox" 
-                    checked={hasLeadCapture}
-                    onChange={() => {}}
-                    className="w-4 h-4 border border-[#232C42] accent-[#C9A24B] mt-0.5 cursor-pointer shrink-0"
-                  />
-                  <div>
-                    <h4 className="font-mono text-xs text-[#E8E4D8] uppercase tracking-wider font-bold">
-                      3-Second Lead Capture Dispatch Pipeline
-                    </h4>
-                    <p className="text-[11px] text-steel-gray mt-1 leading-relaxed">
-                      Enables the exact interactive school-notebook capture form linked directly to your SMS/Email dispatcher.
-                    </p>
+                {/* Checklist items */}
+                <div className="space-y-4">
+                  
+                  {/* Custom Branding upgrade */}
+                  <div 
+                    onClick={() => toggleCalculatorOption('branding')}
+                    className={`flex items-start gap-4 p-4 border transition-all ${
+                      isBrandingIncluded 
+                        ? 'bg-[#0A0D15]/20 border-[#232C42]/50 opacity-80 cursor-default'
+                        : 'bg-[#0A0D15]/40 hover:bg-[#0A0D15]/80 border-[#232C42] hover:border-[#C9A24B]/40 cursor-pointer select-none'
+                    }`}
+                  >
+                    <input 
+                      type="checkbox" 
+                      checked={isBrandingIncluded || hasBranding}
+                      disabled={isBrandingIncluded}
+                      onChange={() => {}}
+                      className="w-4 h-4 border border-[#232C42] accent-[#C9A24B] mt-0.5 cursor-pointer shrink-0 disabled:opacity-80"
+                    />
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h4 className="font-mono text-xs text-[#E8E4D8] uppercase tracking-wider font-bold">
+                          Custom Trade Branding &amp; Vector Badges
+                        </h4>
+                        {isBrandingIncluded && (
+                          <span className="text-[9px] bg-[#C9A24B]/10 text-[#C9A24B] px-1.5 py-0.5 font-mono border border-[#C9A24B]/20">
+                            INCLUDED
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-steel-gray mt-1 leading-relaxed font-sans">
+                        Unique vector badges, custom mascot stickers, and customized trademark-looking stamps for your license numbers.
+                      </p>
+                    </div>
+                    <span className="ml-auto font-mono text-xs text-[#C9A24B] font-bold shrink-0">
+                      {isBrandingIncluded ? 'Included' : '+$400'}
+                    </span>
                   </div>
-                  <span className="ml-auto font-mono text-xs text-[#C9A24B] font-bold">
-                    +$300
-                  </span>
-                </div>
 
-                {/* Option 3 */}
-                <div 
-                  onClick={() => toggleCalculatorOption('seo')}
-                  className="flex items-start gap-4 bg-[#0A0D15]/40 hover:bg-[#0A0D15]/80 p-4 border border-[#232C42] hover:border-[#C9A24B]/40 cursor-pointer select-none transition-all"
-                >
-                  <input 
-                    type="checkbox" 
-                    checked={hasSeo}
-                    onChange={() => {}}
-                    className="w-4 h-4 border border-[#232C42] accent-[#C9A24B] mt-0.5 cursor-pointer shrink-0"
-                  />
-                  <div>
-                    <h4 className="font-mono text-xs text-[#E8E4D8] uppercase tracking-wider font-bold">
-                      Hyperlocal Neighborhood SEO Sub-grids
-                    </h4>
-                    <p className="text-[11px] text-steel-gray mt-1 leading-relaxed">
-                      Custom secondary layouts optimized to rank in specific cities (e.g. Burbank, Pasadena, Silverlake, Beverly Hills).
-                    </p>
+                  {/* Lead capture upgrade */}
+                  <div 
+                    onClick={() => toggleCalculatorOption('lead')}
+                    className={`flex items-start gap-4 p-4 border transition-all ${
+                      isLeadIncluded 
+                        ? 'bg-[#0A0D15]/20 border-[#232C42]/50 opacity-80 cursor-default'
+                        : 'bg-[#0A0D15]/40 hover:bg-[#0A0D15]/80 border-[#232C42] hover:border-[#C9A24B]/40 cursor-pointer select-none'
+                    }`}
+                  >
+                    <input 
+                      type="checkbox" 
+                      checked={isLeadIncluded || hasLeadCapture}
+                      disabled={isLeadIncluded}
+                      onChange={() => {}}
+                      className="w-4 h-4 border border-[#232C42] accent-[#C9A24B] mt-0.5 cursor-pointer shrink-0 disabled:opacity-80"
+                    />
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h4 className="font-mono text-xs text-[#E8E4D8] uppercase tracking-wider font-bold">
+                          3-Second Instant Lead Capture Dispatch
+                        </h4>
+                        {isLeadIncluded && (
+                          <span className="text-[9px] bg-[#C9A24B]/10 text-[#C9A24B] px-1.5 py-0.5 font-mono border border-[#C9A24B]/20">
+                            INCLUDED
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-steel-gray mt-1 leading-relaxed font-sans">
+                        Enables the custom school-notebook style capture form linked directly to your SMS or Email forwarding dispatcher.
+                      </p>
+                    </div>
+                    <span className="ml-auto font-mono text-xs text-[#C9A24B] font-bold shrink-0">
+                      {isLeadIncluded ? 'Included' : '+$300'}
+                    </span>
                   </div>
-                  <span className="ml-auto font-mono text-xs text-[#C9A24B] font-bold">
-                    +$500
-                  </span>
-                </div>
 
-                {/* Option 4 */}
-                <div 
-                  onClick={() => toggleCalculatorOption('widget')}
-                  className="flex items-start gap-4 bg-[#0A0D15]/40 hover:bg-[#0A0D15]/80 p-4 border border-[#232C42] hover:border-[#C9A24B]/40 cursor-pointer select-none transition-all"
-                >
-                  <input 
-                    type="checkbox" 
-                    checked={hasWidget}
-                    onChange={() => {}}
-                    className="w-4 h-4 border border-[#232C42] accent-[#C9A24B] mt-0.5 cursor-pointer shrink-0"
-                  />
-                  <div>
-                    <h4 className="font-mono text-xs text-[#E8E4D8] uppercase tracking-wider font-bold">
-                      Interactive Calculation Widget (Upgrade)
-                    </h4>
-                    <p className="text-[11px] text-steel-gray mt-1 leading-relaxed">
-                      A custom-tailored tool like a panel upgrade estimator or A/C size calculator built directly into your landing page.
-                    </p>
+                  {/* Neighborhood SEO upgrade */}
+                  <div 
+                    onClick={() => toggleCalculatorOption('seo')}
+                    className={`flex items-start gap-4 p-4 border transition-all ${
+                      isSeoIncluded 
+                        ? 'bg-[#0A0D15]/20 border-[#232C42]/50 opacity-80 cursor-default'
+                        : 'bg-[#0A0D15]/40 hover:bg-[#0A0D15]/80 border-[#232C42] hover:border-[#C9A24B]/40 cursor-pointer select-none'
+                    }`}
+                  >
+                    <input 
+                      type="checkbox" 
+                      checked={isSeoIncluded || hasSeo}
+                      disabled={isSeoIncluded}
+                      onChange={() => {}}
+                      className="w-4 h-4 border border-[#232C42] accent-[#C9A24B] mt-0.5 cursor-pointer shrink-0 disabled:opacity-80"
+                    />
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h4 className="font-mono text-xs text-[#E8E4D8] uppercase tracking-wider font-bold">
+                          Hyperlocal Neighborhood SEO Sub-grids
+                        </h4>
+                        {isSeoIncluded && (
+                          <span className="text-[9px] bg-[#C9A24B]/10 text-[#C9A24B] px-1.5 py-0.5 font-mono border border-[#C9A24B]/20">
+                            INCLUDED
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-steel-gray mt-1 leading-relaxed font-sans">
+                        Custom secondary landing layouts optimized to rank for specific service cities (e.g. Burbank, Pasadena, Silverlake).
+                      </p>
+                    </div>
+                    <span className="ml-auto font-mono text-xs text-[#C9A24B] font-bold shrink-0">
+                      {isSeoIncluded ? 'Included' : '+$500'}
+                    </span>
                   </div>
-                  <span className="ml-auto font-mono text-xs text-[#C9A24B] font-bold">
-                    +$350
-                  </span>
-                </div>
 
+                  {/* Interactive estimator widget */}
+                  <div 
+                    onClick={() => toggleCalculatorOption('widget')}
+                    className={`flex items-start gap-4 p-4 border transition-all ${
+                      isWidgetIncluded 
+                        ? 'bg-[#0A0D15]/20 border-[#232C42]/50 opacity-80 cursor-default'
+                        : 'bg-[#0A0D15]/40 hover:bg-[#0A0D15]/80 border-[#232C42] hover:border-[#C9A24B]/40 cursor-pointer select-none'
+                    }`}
+                  >
+                    <input 
+                      type="checkbox" 
+                      checked={isWidgetIncluded || hasWidget}
+                      disabled={isWidgetIncluded}
+                      onChange={() => {}}
+                      className="w-4 h-4 border border-[#232C42] accent-[#C9A24B] mt-0.5 cursor-pointer shrink-0 disabled:opacity-80"
+                    />
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h4 className="font-mono text-xs text-[#E8E4D8] uppercase tracking-wider font-bold">
+                          Interactive Calculation Widget Upgrade
+                        </h4>
+                        {isWidgetIncluded && (
+                          <span className="text-[9px] bg-[#C9A24B]/10 text-[#C9A24B] px-1.5 py-0.5 font-mono border border-[#C9A24B]/20">
+                            INCLUDED
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-steel-gray mt-1 leading-relaxed font-sans">
+                        Custom built-in estimator tools (such as panel upgrade calculator or AC unit sizer) mapped directly into your frontend.
+                      </p>
+                    </div>
+                    <span className="ml-auto font-mono text-xs text-[#C9A24B] font-bold shrink-0">
+                      {isWidgetIncluded ? 'Included' : '+$350'}
+                    </span>
+                  </div>
+
+                </div>
               </div>
 
               {/* Speed Delivery Tiers */}
-              <div className="mt-6 border-t border-[#232C42] pt-6">
-                <h4 className="font-mono text-[9px] font-bold text-steel-gray tracking-widest uppercase mb-3">
+              <div className="mt-8 border-t border-[#232C42] pt-6">
+                <h4 className="font-mono text-[9px] font-bold text-gray-400 tracking-widest uppercase mb-3">
                   ★ SELECT LAUNCH SPEED TIER:
                 </h4>
                 <div className="grid grid-cols-2 gap-4">
                   
                   <button
                     onClick={() => handleSpeedTier('standard')}
-                    className={`py-3 px-4 border font-mono text-[10px] font-bold uppercase transition-all cursor-pointer flex flex-col items-center gap-1 rounded-none ${
+                    className={`py-3.5 px-4 border font-mono text-[10px] font-bold uppercase transition-all cursor-pointer flex flex-col items-center gap-1 rounded-none ${
                       speedTier === 'standard'
-                        ? 'bg-[#C9A24B]/10 border-[#C9A24B] text-[#C9A24B]'
+                        ? 'bg-[#C9A24B]/15 border-[#C9A24B] text-[#C9A24B]'
                         : 'bg-[#161F30] text-steel-gray border-[#232C42] hover:border-[#C9A24B]/30'
                     }`}
                   >
@@ -728,14 +871,14 @@ export default function App() {
 
                   <button
                     onClick={() => handleSpeedTier('turbo')}
-                    className={`py-3 px-4 border font-mono text-[10px] font-bold uppercase transition-all cursor-pointer flex flex-col items-center gap-1 rounded-none ${
+                    className={`py-3.5 px-4 border font-mono text-[10px] font-bold uppercase transition-all cursor-pointer flex flex-col items-center gap-1 rounded-none ${
                       speedTier === 'turbo'
-                        ? 'bg-[#C9A24B]/10 border-[#C9A24B] text-[#C9A24B]'
+                        ? 'bg-[#C9A24B]/15 border-[#C9A24B] text-[#C9A24B]'
                         : 'bg-[#161F30] text-steel-gray border-[#232C42] hover:border-[#C9A24B]/30'
                     }`}
                   >
                     <span>🚀 TURBO-BLAST SPRINT</span>
-                    <span className="text-[9px] text-[#C9A24B] mt-0.5 font-normal">Live in 3 Days (+$450)</span>
+                    <span className="text-[9px] text-[#C9A24B] mt-0.5 font-normal font-bold">Live in 3 Days (+$450)</span>
                   </button>
 
                 </div>
@@ -744,171 +887,145 @@ export default function App() {
             </div>
 
             {/* Right Column: Premium Document Style Invoice Sheet */}
-            <div className="lg:col-span-5 bg-[#F5F2EB] text-[#121622] border border-[#C9A24B] rounded-none p-6 md:p-8 relative select-none shadow-2xl">
-              
-              {/* Gold header outline */}
-              <div className="absolute top-2 left-2 right-2 bottom-2 border border-[#C9A24B]/20 pointer-events-none" />
-
-              <div className="font-mono text-xs relative z-10">
+            <div className="lg:col-span-5 flex flex-col justify-between">
+              <div className="bg-[#F5F2EB] text-[#121622] border border-[#C9A24B] rounded-none p-6 md:p-8 relative select-none shadow-2xl h-full flex flex-col justify-between">
                 
-                <div className="text-center border-b border-[#121622]/20 pb-4 mb-5">
-                  <h4 className="font-display text-sm font-bold text-[#121622] uppercase tracking-wider">
-                    WEBNAR SPRINT ESTIMATE
-                  </h4>
-                  <p className="text-[9px] text-[#7A8399] tracking-widest mt-1">
-                    LOS ANGELES TRADES DIVISION // JULY 2026
-                  </p>
-                </div>
+                {/* Gold header outline */}
+                <div className="absolute top-2 left-2 right-2 bottom-2 border border-[#C9A24B]/20 pointer-events-none" />
 
-                <div className="space-y-3.5 border-b border-[#121622]/15 pb-5 mb-5 text-[11px]">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 uppercase">Base design build</span>
-                    <span className="font-bold">$1,200.00</span>
-                  </div>
-                  {hasBranding && (
-                    <div className="flex justify-between">
-                      <span className="text-gray-600 uppercase">Vector logos &amp; stamps</span>
-                      <span className="font-bold">$400.00</span>
-                    </div>
-                  )}
-                  {hasLeadCapture && (
-                    <div className="flex justify-between">
-                      <span className="text-gray-600 uppercase">3s SMS dispatcher</span>
-                      <span className="font-bold">$300.00</span>
-                    </div>
-                  )}
-                  {hasSeo && (
-                    <div className="flex justify-between">
-                      <span className="text-gray-600 uppercase">Neighborhood SEO hub</span>
-                      <span className="font-bold">$500.00</span>
-                    </div>
-                  )}
-                  {hasWidget && (
-                    <div className="flex justify-between">
-                      <span className="text-gray-600 uppercase">Interactive estimator</span>
-                      <span className="font-bold">$350.00</span>
-                    </div>
-                  )}
-                  {speedTier === 'turbo' && (
-                    <div className="flex justify-between text-[#C9A24B] font-bold">
-                      <span className="uppercase">🚀 Turbo 3-Day Sprint</span>
-                      <span>$450.00</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Subtotal & Discount Badge */}
-                <div className="space-y-2.5 mb-6">
+                <div className="font-mono text-xs relative z-10">
                   
-                  {/* Premium Discount Label */}
-                  <div className="bg-[#121622] text-[#C9A24B] border border-[#C9A24B] font-mono text-[9px] font-bold uppercase p-2.5 tracking-wider text-center">
-                    ★ 50% LAUNCH DEAL APPLIED ON BASE DESIGN! (-$600)
+                  <div className="text-center border-b border-[#121622]/20 pb-4 mb-5">
+                    <h4 className="font-display text-sm font-bold text-[#121622] uppercase tracking-wider">
+                      WEBNAR SPRINT ESTIMATE
+                    </h4>
+                    <p className="text-[9px] text-[#7A8399] tracking-widest mt-1">
+                      LOS ANGELES TRADES DIVISION // JULY 2026
+                    </p>
                   </div>
 
-                  <div className="flex justify-between text-xs pt-2">
-                    <span className="text-gray-600">Subtotal:</span>
-                    <span>${totalPrice}.00</span>
+                  <div className="space-y-3.5 border-b border-[#121622]/15 pb-5 mb-5 text-[11px]">
+                    <div className="flex justify-between font-bold">
+                      <span className="uppercase">
+                        {selectedPackage === 'essential' && 'Essential Core Base'}
+                        {selectedPackage === 'professional' && 'Professional Suite Base'}
+                        {selectedPackage === 'signature' && 'Signature Custom Base'}
+                      </span>
+                      <span>${basePrice.toLocaleString()}.00</span>
+                    </div>
+
+                    {/* Show customizable add-ons if added separately */}
+                    {!isBrandingIncluded && hasBranding && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600 uppercase">Vector Logos &amp; Stamps</span>
+                        <span className="font-bold">+$400.00</span>
+                      </div>
+                    )}
+                    {!isLeadIncluded && hasLeadCapture && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600 uppercase">3s SMS Lead Dispatch</span>
+                        <span className="font-bold">+$300.00</span>
+                      </div>
+                    )}
+                    {!isSeoIncluded && hasSeo && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600 uppercase">Neighborhood SEO Hub</span>
+                        <span className="font-bold">+$500.00</span>
+                      </div>
+                    )}
+                    {!isWidgetIncluded && hasWidget && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600 uppercase">Interactive Estimator Widget</span>
+                        <span className="font-bold">+$350.00</span>
+                      </div>
+                    )}
+
+                    {/* Show speed delivery upgrades */}
+                    {speedTier === 'turbo' && (
+                      <div className="flex justify-between text-[#C9A24B] font-bold bg-[#121622] p-2">
+                        <span className="uppercase text-[#C9A24B] font-mono">🚀 Turbo 3-Day Sprint</span>
+                        <span>+$450.00</span>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex justify-between text-xs text-red-700 font-bold">
-                    <span>Launch discount:</span>
-                    <span>-$600.00</span>
+
+                  <div className="space-y-2 mb-6">
+                    <div className="flex justify-between text-xs pt-1">
+                      <span className="text-gray-600">Raw Build Subtotal:</span>
+                      <span className="font-bold">${totalPrice.toLocaleString()}.00</span>
+                    </div>
                   </div>
+
+                  {/* Total */}
+                  <div className="border-t border-[#121622]/20 border-dashed pt-4 mb-6">
+                    <div className="flex justify-between items-baseline">
+                      <span className="font-display text-xs font-bold uppercase tracking-wider">GRAND TOTAL:</span>
+                      <span className="font-display text-2xl font-black text-[#121622]">
+                        ${totalPrice.toLocaleString()}.00
+                      </span>
+                    </div>
+                    <p className="text-[9px] text-[#7A8399] tracking-wider uppercase mt-3 text-center leading-normal">
+                      *One-time fixed contract fee. No ongoing platform cuts. Includes 100% intellectual property delivery.*
+                    </p>
+                  </div>
+
+                  <a
+                    href="#lead-capture-simulator"
+                    onClick={() => playSuccess()}
+                    className="block w-full text-center bg-[#121622] hover:bg-[#C9A24B] text-[#C9A24B] hover:text-[#121622] border border-[#121622] font-display text-[10px] font-bold tracking-widest uppercase py-4 transition-all duration-300 cursor-pointer shadow-lg"
+                  >
+                    LOCK ESTIMATE &amp; START SPRINT ⚡
+                  </a>
+
                 </div>
-
-                {/* Total */}
-                <div className="border-t border-[#121622]/20 border-dashed pt-4 mb-6">
-                  <div className="flex justify-between items-baseline">
-                    <span className="font-display text-xs font-bold uppercase tracking-wider">GRAND TOTAL:</span>
-                    <span className="font-display text-xl font-black text-[#121622]">
-                      ${totalPrice - 600}.00
-                    </span>
-                  </div>
-                  <p className="text-[9px] text-[#7A8399] tracking-wider uppercase mt-2.5 text-center leading-normal">
-                    *One-time contract fee. No recurring percentages. You own 100% of the deployed code.*
-                  </p>
-                </div>
-
-                <a
-                  href="#lead-capture-simulator"
-                  onClick={() => playSuccess()}
-                  className="block w-full text-center bg-[#121622] hover:bg-[#C9A24B] text-[#C9A24B] hover:text-[#121622] border border-[#121622] font-display text-[10px] font-bold tracking-widest uppercase py-4 transition-all duration-300 cursor-pointer"
-                >
-                  LOCK ESTIMATE &amp; SPRINT ⚡
-                </a>
-
               </div>
             </div>
 
           </div>
 
-        </section>
-
-
-        {/* SECTION: CLIENT TESTIMONIAL MARQUEE */}
-        <section className="mb-24">
-          
-          <div className="flex flex-col md:flex-row items-baseline justify-between mb-10 gap-4">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl text-[#C9A24B]">💬</span>
-              <h2 className="font-display text-base md:text-lg font-bold text-white uppercase tracking-wider">
-                What local tradesmen say
-              </h2>
-            </div>
-            <div className="h-[1px] flex-1 bg-[#232C42] hidden md:block" />
-            <span className="font-mono text-[9px] text-steel-gray font-bold tracking-widest uppercase">
-              100% VERIFIED LA REVIEWS
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {CLIENT_TESTIMONIALS.map((test, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ y: -4 }}
-                onHoverStart={() => playBloop(280 + idx * 30, 0.05)}
-                className="bg-[#101828] text-white border border-[#232C42] hover:border-[#C9A24B]/40 rounded-none p-6 relative overflow-hidden flex flex-col justify-between shadow-lg transition-colors duration-300"
-              >
-                {/* Tech slot sticker */}
-                <div className="absolute -top-[1px] right-6 bg-[#232C42]/60 border-x border-b border-[#232C42] text-[8px] font-mono font-bold text-center text-steel-gray px-3.5 py-1 select-none uppercase tracking-widest">
-                  SYS_RECORD_0{idx + 1}
-                </div>
-
+          {/* EXPLANATION HUB: WHAT IS A SPRINT ESTIMATE EXACTLY? */}
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+            <div className="md:col-span-12 bg-[#101828] border border-[#232C42] rounded-sm p-6 md:p-8 shadow-md font-mono text-xs">
+              <div className="flex items-center gap-2.5 pb-4 mb-4 border-b border-[#232C42]">
+                <span className="text-[#C9A24B] text-lg">💡</span>
+                <h4 className="font-display text-sm font-bold text-white uppercase tracking-wider">
+                  What is a WebNar Sprint Estimate exactly?
+                </h4>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-[#E8E4D8]/80 leading-relaxed font-sans text-xs md:text-sm">
                 <div>
-                  {/* Rating Stars */}
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(test.rating)].map((_, i) => (
-                      <span key={i} className="text-[#C9A24B] text-xs">
-                        ★
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Quote */}
-                  <p className="font-sans text-sm text-[#E8E4D8]/80 italic mb-6 leading-relaxed">
-                    &ldquo;{test.quote}&rdquo;
+                  <h5 className="font-mono text-xs font-bold text-[#C9A24B] uppercase tracking-wider mb-2">
+                    1. HYPER-ACCELERATED DELIVERY
+                  </h5>
+                  <p>
+                    Standard agency builds take 6 to 12 weeks of endless meetings. We operate in hyper-focused <strong className="text-white">3 to 5 day Sprints</strong>. Our team limits client intake to build and ship your custom digital storefront instantly, with zero downtime.
                   </p>
                 </div>
-
-                {/* Reviewer */}
-                <div className="flex items-center gap-3 border-t border-[#232C42] pt-4 mt-auto">
-                  <div className="w-10 h-10 rounded-none bg-[#C9A24B]/10 border border-[#C9A24B]/30 flex items-center justify-center text-lg">
-                    {test.avatar}
-                  </div>
-                  <div>
-                    <h4 className="font-display text-[10px] font-bold text-white uppercase tracking-wider">
-                      {test.name}
-                    </h4>
-                    <p className="text-[9px] font-mono text-[#C9A24B] uppercase tracking-wider mt-0.5">
-                      {test.trade} // {test.location}
-                    </p>
-                  </div>
+                <div>
+                  <h5 className="font-mono text-xs font-bold text-[#C9A24B] uppercase tracking-wider mb-2">
+                    2. FIXED-PRICE TRANSPARENCY
+                  </h5>
+                  <p>
+                    There are no hidden fees or monthly hosting markups. Your <strong className="text-white">Sprint Estimate</strong> is a fully-inclusive, one-time contract. You see exactly what you pay based on your customized upgrades, with a standard 50% deposit.
+                  </p>
                 </div>
-
-              </motion.div>
-            ))}
+                <div>
+                  <h5 className="font-mono text-xs font-bold text-[#C9A24B] uppercase tracking-wider mb-2">
+                    3. COMPLETE CODE OWNERSHIP
+                  </h5>
+                  <p>
+                    Unlike subscription builders (Wix, Squarespace) that lock you in forever, WebNar delivers your custom React/Tailwind codebase directly to you. You own <strong className="text-white">100% of the raw assets and IP</strong> with no ongoing subscription requirements.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
         </section>
+
+
+        {/* SECTION: CLIENT REVIEW CONSOLE HUB */}
+        <ReviewConsole />
 
 
         {/* BOTTOM CALL TO ACTION PANEL */}

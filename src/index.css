@@ -18,6 +18,17 @@
   --color-cartoon-teal: #94A3B8;
   --color-cartoon-green: #64748B;
   --color-cartoon-purple: rgba(18, 24, 38, 0.85);
+
+  --animate-shimmer: shimmer 1.8s ease-in-out infinite;
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
 }
 
 /* Luxury Hardware Borders */
