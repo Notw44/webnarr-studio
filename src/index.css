@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800;900&family=Archivo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Unbounded", sans-serif;
+  --font-sans: "Archivo", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-bg-navy: transparent;
+  --color-panel-dark: rgba(18, 24, 38, 0.72);
+  --color-line-blue: rgba(148, 163, 184, 0.15);
+  --color-gold-90s: #CBD5E1;
+  --color-ink-cream: #F1F5F9;
+  --color-steel-gray: #94A3B8;
+  
+  --color-cartoon-yellow: #E2E8F0;
+  --color-cartoon-pink: #F1F5F9;
+  --color-cartoon-teal: #94A3B8;
+  --color-cartoon-green: #64748B;
+  --color-cartoon-purple: rgba(18, 24, 38, 0.85);
+}
+
+/* Luxury Hardware Borders */
+.cartoon-border {
+  border: 1px solid rgba(226, 232, 240, 0.3);
+}
+
+.cartoon-border-sm {
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.cartoon-shadow-pink {
+  box-shadow: 0 4px 20px rgba(148, 163, 184, 0.08);
+}
+
+.cartoon-shadow-teal {
+  box-shadow: 0 4px 20px rgba(148, 163, 184, 0.12);
+}
+
+.cartoon-shadow-green {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.cartoon-shadow-yellow {
+  box-shadow: 0 4px 25px rgba(226, 232, 240, 0.1);
+}
+
+.cartoon-shadow-black {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.cartoon-shadow-black-sm {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Subtle Blueprint Grid Pattern in Hero */
+.blueprint-grid {
+  background-color: transparent;
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(226, 232, 240, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.03) 1px, transparent 1px);
+}
+
+/* Standard Subtle Grid Pattern for Body */
+.retro-grid {
+  background-color: transparent;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+}
+
+/* Elegant Soft Dots Pattern */
+.retro-halftone {
+  background-image: radial-gradient(rgba(226, 232, 240, 0.03) 15%, transparent 16%);
+  background-size: 8px 8px;
+}
+
+.retro-halftone-white {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.02) 15%, transparent 16%);
+  background-size: 10px 10px;
+}
+
+/* Soft Premium Glows */
+.crt-glow {
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 0 15px rgba(226, 232, 240, 0.1);
+}
+
+/* Custom Scrollbar for Luxury Brand */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0D14;
+}
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}

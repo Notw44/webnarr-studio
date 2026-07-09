@@ -1,0 +1,6 @@
+{
+  "name": "WebNar",
+  "description": "Premium custom web design studio in Los Angeles building high-trust digital storefronts for electricians, plumbers, and HVAC contractors with ultra-fast lead capture forwarding.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
