@@ -101,7 +101,7 @@ export default function ReviewConsole() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
         {/* LEFT CARD: INTERACTIVE WRITING FORM */}
-        <div className="lg:col-span-7 bg-[#101828] text-white border border-[#232C42] rounded-md p-6 md:p-8 relative overflow-hidden flex flex-col justify-between shadow-xl">
+        <div className="lg:col-span-7 bg-[#101828] text-white border border-[#232C42] rounded-2xl p-6 md:p-8 relative overflow-hidden flex flex-col justify-between shadow-xl">
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C9A24B]/20 to-transparent" />
           
           <div className="relative z-10">
@@ -109,7 +109,7 @@ export default function ReviewConsole() {
               <span className="font-mono text-xs text-[#C9A24B] font-bold tracking-widest uppercase">
                 [ SYS_INPUT // REPUTATION_CONSOLE ]
               </span>
-              <div className="bg-[#C9A24B]/10 text-[#C9A24B] text-[11px] font-mono tracking-widest px-3 py-1 border border-[#C9A24B]/20 uppercase">
+              <div className="bg-[#C9A24B]/10 text-[#C9A24B] text-[11px] font-mono tracking-widest px-3 py-1 border border-[#C9A24B]/20 rounded-full uppercase">
                 STATION ACTIVE
               </div>
             </div>
@@ -128,7 +128,7 @@ export default function ReviewConsole() {
                 <label className="block text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">
                   Experience Rating:
                 </label>
-                <div className="flex items-center gap-2 bg-[#0A0D15] p-3 border border-[#232C42] inline-flex rounded-sm">
+                <div className="flex items-center gap-2 bg-[#0A0D15] p-3 border border-[#232C42] inline-flex rounded-xl">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
@@ -167,7 +167,7 @@ export default function ReviewConsole() {
                     placeholder="e.g. David K."
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-none focus:outline-none placeholder:text-gray-600 text-sm transition-colors"
+                    className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-xl focus:outline-none placeholder:text-gray-600 text-sm transition-colors"
                   />
                 </div>
                 <div>
@@ -179,7 +179,7 @@ export default function ReviewConsole() {
                     placeholder="e.g. Dave's Sparky Shop"
                     value={trade}
                     onChange={(e) => setTrade(e.target.value)}
-                    className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-none focus:outline-none placeholder:text-gray-600 text-sm transition-colors"
+                    className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-xl focus:outline-none placeholder:text-gray-600 text-sm transition-colors"
                   />
                 </div>
               </div>
@@ -194,14 +194,14 @@ export default function ReviewConsole() {
                     placeholder="e.g. Burbank"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-none focus:outline-none placeholder:text-gray-600 text-sm transition-colors"
+                    className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-xl focus:outline-none placeholder:text-gray-600 text-sm transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">
                     Select Avatar Badge:
                   </label>
-                  <div className="flex gap-2.5 bg-[#0A0D15] p-2 border border-[#232C42] justify-around rounded-none">
+                  <div className="flex gap-2.5 bg-[#0A0D15] p-2 border border-[#232C42] justify-around rounded-xl">
                     {['👨‍🔧', '👩‍🔧', '🧔', '🏢', '⚡', '🔧'].map((emoji) => (
                       <button
                         key={emoji}
@@ -211,7 +211,7 @@ export default function ReviewConsole() {
                           avatar === emoji
                             ? 'bg-[#C9A24B]/20 border border-[#C9A24B] scale-110'
                             : 'border border-transparent hover:bg-white/5'
-                        } cursor-pointer rounded-sm`}
+                        } cursor-pointer rounded-xl`}
                       >
                         {emoji}
                       </button>
@@ -230,12 +230,12 @@ export default function ReviewConsole() {
                   placeholder="Describe your project, completion speed, and overall experience..."
                   value={quote}
                   onChange={(e) => setQuote(e.target.value)}
-                  className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-none focus:outline-none placeholder:text-gray-600 text-sm transition-colors resize-none"
+                  className="w-full bg-[#0A0D15] text-white border border-[#232C42] focus:border-[#C9A24B] p-3 rounded-xl focus:outline-none placeholder:text-gray-600 text-sm transition-colors resize-none"
                 />
               </div>
 
               {/* VERCEL/POST READY NOTIFICATION BADGE */}
-              <div className="flex items-start gap-2.5 bg-[#C9A24B]/5 border border-[#C9A24B]/20 p-3 rounded-sm">
+              <div className="flex items-start gap-2.5 bg-[#C9A24B]/5 border border-[#C9A24B]/20 p-3 rounded-xl">
                 <span className="text-[#C9A24B] text-base leading-none">⚙️</span>
                 <p className="text-[11px] font-mono text-gray-300 leading-normal">
                   <span className="text-[#C9A24B] font-bold">Vercel API Hook:</span> Submitting saves to local memory. When you deploy to Vercel, simply map this form action to a serverless function endpoint to persist to your Postgres or MongoDB backend.
@@ -245,10 +245,10 @@ export default function ReviewConsole() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full font-display text-sm font-bold uppercase py-4 tracking-widest transition-all rounded-sm ${
+                className={`w-full font-display text-sm font-bold uppercase py-4 tracking-widest transition-all rounded-xl cursor-pointer ${
                   isSubmitting
                     ? 'bg-[#232C42] text-gray-400 cursor-not-allowed border border-transparent'
-                    : 'bg-[#C9A24B] hover:bg-white text-[#0A0F1E] font-extrabold border border-[#C9A24B] cursor-pointer active:scale-[0.99] shadow-lg'
+                    : 'machined-metal-btn'
                 }`}
               >
                 {isSubmitting ? '📡 COMMITTING TO DATABASE...' : '⚡ PUBLISH PREMIUM REVIEW'}
@@ -259,7 +259,7 @@ export default function ReviewConsole() {
 
         {/* RIGHT CARD: LIVE LEDGER FEED */}
         <div className="lg:col-span-5 flex flex-col justify-between font-mono">
-          <div className="bg-[#101828] border border-[#232C42] rounded-md p-6 md:p-8 text-[#E8E4D8] h-full flex flex-col justify-between relative overflow-hidden shadow-xl">
+          <div className="bg-[#101828] border border-[#232C42] rounded-2xl p-6 md:p-8 text-[#E8E4D8] h-full flex flex-col justify-between relative overflow-hidden shadow-xl">
             
             <div>
               {/* Header */}
@@ -311,16 +311,16 @@ export default function ReviewConsole() {
                     animate={{ opacity: 1 }}
                     className="space-y-4 text-sm"
                   >
-                    <div className="flex justify-between items-center bg-[#C9A24B]/10 p-3 border border-[#C9A24B]/30 text-[#C9A24B]">
+                    <div className="flex justify-between items-center bg-[#C9A24B]/10 p-3 border border-[#C9A24B]/30 text-[#C9A24B] rounded-xl">
                       <span className="font-bold text-xs tracking-widest uppercase">★ SUCCESS: SUBMITTED</span>
                       <span className="text-xs animate-pulse font-bold tracking-widest uppercase">
                         ● VERIFIED
                       </span>
                     </div>
 
-                    <div className="space-y-3.5 bg-[#0A0D15]/60 p-5 border border-[#232C42] relative">
+                    <div className="space-y-3.5 bg-[#0A0D15]/60 p-5 border border-[#232C42] relative rounded-xl">
                       {/* Laser stamp */}
-                      <div className="absolute top-3 right-3 border border-[#C9A24B] text-[#C9A24B] text-xs font-bold px-2.5 py-1 rounded-none rotate-6 uppercase select-none">
+                      <div className="absolute top-3 right-3 border border-[#C9A24B] text-[#C9A24B] text-xs font-bold px-2.5 py-1 rounded-full rotate-6 uppercase select-none">
                         PENDING SYNC
                       </div>
 
@@ -356,7 +356,7 @@ export default function ReviewConsole() {
                     <button
                       type="button"
                       onClick={() => setSubmittedReview(null)}
-                      className="w-full text-center border border-[#232C42] hover:border-[#C9A24B] text-gray-300 hover:text-white py-2 text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                      className="w-full text-center border border-[#232C42] hover:border-[#C9A24B] text-gray-300 hover:text-white py-2 text-xs uppercase tracking-wider transition-colors cursor-pointer rounded-xl"
                     >
                       WRITE ANOTHER REVIEW
                     </button>
@@ -368,7 +368,7 @@ export default function ReviewConsole() {
                     animate={{ opacity: 1 }}
                     className="space-y-4"
                   >
-                    <div className="bg-[#0A0D15] p-3 border border-[#232C42] flex justify-between items-center">
+                    <div className="bg-[#0A0D15] p-3 border border-[#232C42] flex justify-between items-center rounded-xl">
                       <span className="text-[#C9A24B] font-bold text-xs tracking-widest uppercase">★ RECENT ENTRIES</span>
                       <span className="text-[10px] text-gray-400 font-mono">
                         TOTAL: {userReviews.length}
@@ -376,7 +376,7 @@ export default function ReviewConsole() {
                     </div>
 
                     {userReviews.length === 0 ? (
-                      <div className="border border-dashed border-[#232C42] rounded-sm p-8 text-center text-gray-400 space-y-3">
+                      <div className="border border-dashed border-[#232C42] rounded-2xl p-8 text-center text-gray-400 space-y-3">
                         <div className="text-2xl">✒️</div>
                         <p className="text-xs uppercase tracking-wider leading-relaxed">
                           No reviews recorded on local storage ledger yet.
@@ -390,7 +390,7 @@ export default function ReviewConsole() {
                         {userReviews.map((rev) => (
                           <div
                             key={rev.id}
-                            className="bg-[#0A0D15]/80 border border-[#232C42] p-3.5 relative overflow-hidden"
+                            className="bg-[#0A0D15]/80 border border-[#232C42] p-3.5 relative overflow-hidden rounded-xl"
                           >
                             <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-[#232C42]/40">
                               <span className="text-xs text-[#C9A24B] font-bold tracking-wider uppercase">

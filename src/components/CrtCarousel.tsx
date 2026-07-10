@@ -90,21 +90,21 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
   return (
     <div id="crt-monitor-section" className="w-full max-w-lg mx-auto flex flex-col items-center">
       {/* Outer Titanium/Gold Hardware Bezel */}
-      <div className="w-full bg-[#121622] border border-[var(--color-gold-90s)]/30 rounded-sm p-5 md:p-6 relative flex flex-col transition-colors duration-300 shadow-2xl">
+      <div className="w-full bg-[#121622] border border-[var(--color-gold-90s)]/30 rounded-2xl p-5 md:p-6 relative flex flex-col transition-colors duration-300 shadow-2xl">
         
         {/* Architectural Rivets */}
-        <div className="absolute top-2 left-2 w-1 h-1 bg-[var(--color-gold-90s)]/30 rounded-full" />
-        <div className="absolute top-2 right-2 w-1 h-1 bg-[var(--color-gold-90s)]/30 rounded-full" />
-        <div className="absolute bottom-2 left-2 w-1 h-1 bg-[var(--color-gold-90s)]/30 rounded-full" />
-        <div className="absolute bottom-2 right-2 w-1 h-1 bg-[var(--color-gold-90s)]/30 rounded-full" />
+        <div className="absolute top-3 left-3 w-1.5 h-1.5 bg-[var(--color-gold-90s)]/30 rounded-full" />
+        <div className="absolute top-3 right-3 w-1.5 h-1.5 bg-[var(--color-gold-90s)]/30 rounded-full" />
+        <div className="absolute bottom-3 left-3 w-1.5 h-1.5 bg-[var(--color-gold-90s)]/30 rounded-full" />
+        <div className="absolute bottom-3 right-3 w-1.5 h-1.5 bg-[var(--color-gold-90s)]/30 rounded-full" />
 
         {/* Technical Badge Label */}
-        <div className="absolute -top-3 left-6 bg-[#0A0F1E] text-[var(--color-gold-90s)] border border-[var(--color-gold-90s)]/30 px-3.5 py-1 text-[11px] font-mono font-bold tracking-widest uppercase select-none">
+        <div className="absolute -top-3 left-6 bg-[#0A0F1E] text-[var(--color-gold-90s)] border border-[var(--color-gold-90s)]/30 px-3.5 py-1 text-[11px] font-mono font-bold tracking-widest uppercase select-none rounded-full">
           SYSTEM INTERFACE // TERMINAL.01
         </div>
 
         {/* Screen Bezel Mask */}
-        <div className="scanlines w-full aspect-[4/3] bg-[#0A0D15] rounded-sm overflow-hidden border border-[#232C42] relative flex flex-col">
+        <div className="scanlines w-full aspect-[4/3] bg-[#0A0D15] rounded-xl overflow-hidden border border-[#232C42] relative flex flex-col">
           
           {/* Static Glass Gloss */}
           <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none z-10" />
@@ -148,14 +148,14 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
                   {/* Embedded Website Header Mockup */}
                   <div className="w-full flex items-center justify-between border-b border-[#232C42] pb-3 mb-4">
                     <div className="flex items-center gap-1.5">
-                      <div className="w-2 h-2 rounded-full bg-[var(--color-gold-90s)]" />
-                      <div className="w-2 h-2 rounded-full bg-[#7A8399]" />
-                      <div className="w-2 h-2 rounded-full bg-[#232C42]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-gold-90s)]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#7A8399]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#232C42]" />
                       <span className="text-xs font-mono text-gray-400 ml-1.5 truncate max-w-[120px] md:max-w-[200px]">
                         www.{currentSlide.businessName.toLowerCase().replace(/\s+/g, '')}.com
                       </span>
                     </div>
-                    <div className="bg-[#232C42]/50 border border-[var(--color-gold-90s)]/20 px-2.5 py-1 rounded-none text-[10px] font-mono text-[var(--color-gold-90s)] tracking-wider uppercase">
+                    <div className="bg-[#232C42]/50 border border-[var(--color-gold-90s)]/20 px-2.5 py-1 rounded-full text-[10px] font-mono text-[var(--color-gold-90s)] tracking-wider uppercase">
                       SECURE SOURCE
                     </div>
                   </div>
@@ -185,7 +185,7 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
                     </div>
 
                     {/* Interactive Highlights Inside Web */}
-                    <div className="space-y-2 bg-[#101828]/80 p-3.5 rounded-sm border border-[#232C42] mb-3">
+                    <div className="space-y-2 bg-[#101828]/80 p-3.5 rounded-xl border border-[#232C42] mb-3">
                       <p className="text-[10px] font-mono text-[var(--color-gold-90s)] font-bold uppercase tracking-widest">
                         ★ Live Premium Feature Modules:
                       </p>
@@ -202,7 +202,7 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
                     {/* Simulated Conversion Button */}
                     <div className="flex items-center justify-between border-t border-[#232C42] pt-3 text-xs font-mono">
                       <span className="text-gray-400">STATUS: <span className="text-[var(--color-gold-90s)] animate-pulse">● LIVE</span></span>
-                      <div className="bg-[var(--color-gold-90s)] text-[#0A0D14] font-bold px-4 py-1.5 text-[10px] tracking-widest uppercase hover:bg-white active:scale-95 transition-all cursor-pointer">
+                      <div className="bg-[var(--color-gold-90s)] text-[#0A0D14] font-bold px-4 py-1.5 text-[10px] tracking-widest uppercase hover:bg-white active:scale-95 transition-all cursor-pointer rounded-xl">
                         BOOK JOB ⚡
                       </div>
                     </div>
@@ -218,8 +218,8 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
           
           {/* Card Reader mockup slot */}
           <div className="flex items-center gap-2">
-            <div className="w-14 h-1.5 bg-black rounded-none border border-[#232C42] relative">
-              <div className="absolute top-0 bottom-0 left-1 w-1.5 bg-[#C9A24B]" />
+            <div className="w-14 h-1.5 bg-black rounded-full border border-[#232C42] relative">
+              <div className="absolute top-0 bottom-0 left-1 w-1.5 bg-[#C9A24B] rounded-full" />
             </div>
             <span className="text-[8px] font-mono text-steel-gray font-bold tracking-widest uppercase select-none">
               SYS_READER
@@ -234,24 +234,24 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
               onClick={handleDegauss}
               disabled={!isPowerOn}
               title="Degauss Screen"
-              className="px-2 py-1.5 rounded-none border border-[#232C42] bg-[#0A0D15] font-mono text-[8px] tracking-widest font-bold text-[#C9A24B] hover:bg-[#232C42]/20 active:scale-95 transition-transform disabled:opacity-30 cursor-pointer"
+              className="px-3 py-1.5 rounded-xl border border-[#232C42] bg-[#0A0D15] font-mono text-[8px] tracking-widest font-bold text-[#C9A24B] hover:bg-[#232C42]/20 active:scale-95 transition-transform disabled:opacity-30 cursor-pointer"
             >
               DEG
             </button>
 
             {/* Next/Prev buttons */}
-            <div className="flex gap-1 bg-[#0A0D15] p-1 border border-[#232C42]">
+            <div className="flex gap-1 bg-[#0A0D15] p-1 border border-[#232C42] rounded-xl">
               <button 
                 onClick={handlePrev}
                 disabled={filteredSlides.length <= 1}
-                className="px-2 py-1 bg-[#101828] border border-[#232C42] text-[10px] text-white hover:bg-[#232C42] hover:text-[#C9A24B] disabled:opacity-30 cursor-pointer"
+                className="px-2.5 py-1 bg-[#101828] border border-transparent text-[10px] text-white hover:bg-[#232C42] hover:text-[#C9A24B] disabled:opacity-30 cursor-pointer rounded-lg"
               >
                 ◀
               </button>
               <button 
                 onClick={handleNext}
                 disabled={filteredSlides.length <= 1}
-                className="px-2 py-1 bg-[#101828] border border-[#232C42] text-[10px] text-white hover:bg-[#232C42] hover:text-[#C9A24B] disabled:opacity-30 cursor-pointer"
+                className="px-2.5 py-1 bg-[#101828] border border-transparent text-[10px] text-white hover:bg-[#232C42] hover:text-[#C9A24B] disabled:opacity-30 cursor-pointer rounded-lg"
               >
                 ▶
               </button>
@@ -260,7 +260,7 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
             {/* Power Button */}
             <button 
               onClick={handlePowerToggle}
-              className={`px-2.5 py-1.5 border font-mono text-[8px] tracking-widest font-bold cursor-pointer transition-colors duration-150 active:scale-95 ${
+              className={`px-3 py-1.5 border font-mono text-[8px] tracking-widest font-bold cursor-pointer transition-colors duration-150 active:scale-95 rounded-xl ${
                 isPowerOn 
                   ? 'bg-red-950/40 text-red-400 border-red-900/60 hover:bg-red-900/40' 
                   : 'bg-emerald-950/40 text-emerald-400 border-emerald-900/60 hover:bg-emerald-900/40'
@@ -275,7 +275,7 @@ export default function CrtCarousel({ activeTradeFilter }: CrtCarouselProps) {
 
       {/* Slide counter under terminal */}
       {isPowerOn && (
-        <div className="mt-3 bg-[#101828]/60 border border-[#232C42] px-3.5 py-1 text-[9px] font-mono text-steel-gray uppercase tracking-widest">
+        <div className="mt-3 bg-[#101828]/60 border border-[#232C42] px-3.5 py-1.5 text-[9px] font-mono text-steel-gray uppercase tracking-widest rounded-full">
           SCREEN <span className="text-[var(--color-gold-90s)] font-bold">{currentIndex + 1}</span> OF{' '}
           <span className="text-white font-bold">{filteredSlides.length}</span> // SKIN:{' '}
           <span className="text-[var(--color-gold-90s)] font-bold">{activeTradeFilter}</span>
